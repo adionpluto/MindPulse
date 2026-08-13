@@ -2,7 +2,7 @@
 
 # Psyche-Reports: Psychological Welfare Assessment Platform
 
-> A school project focused on evaluating individual emotional wellbeing, behavior patterns, and stress metrics to deliver personalized self-improvement reports.
+> A Community Engagement Project(CEP) focused on evaluating individual emotional wellbeing, behavior patterns, and stress metrics to deliver personalized self-improvement reports.
 
 ---
 
@@ -34,4 +34,4 @@ psyche-reports/
 ├── user-01.html          <-- Assessment report for Participant 01
 ├── user-02.html          <-- Assessment report for Participant 02
 └── user-03.html          <-- Assessment report for Participant 03
-...
+---
