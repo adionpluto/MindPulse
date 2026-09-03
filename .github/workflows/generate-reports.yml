@@ -1,0 +1,65 @@
+name: Auto-Generate Psyche Reports
+
+on:
+  repository_dispatch:
+    types: [new_form_response]
+  workflow_dispatch:
+    inputs:
+      sheet_csv_url:
+        description: 'Optional: Published Google Sheet CSV URL to sync'
+        required: false
+        default: ''
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/**'
+      - 'templates/**'
+      - 'automation/**'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Process Survey Responses & Build Reports
+        env:
+          EVENT_PAYLOAD: ${{ toJson(github.event.client_payload) }}
+          SHEET_URL: ${{ inputs.sheet_csv_url }}
+        run: |
+          if [ -n "$EVENT_PAYLOAD" ] && [ "$EVENT_PAYLOAD" != "null" ]; then
+            echo "Processing incoming repository_dispatch payload..."
+            python automation/process_responses.py --single-payload "$EVENT_PAYLOAD"
+          elif [ -n "$SHEET_URL" ]; then
+            echo "Processing Google Sheet CSV sync..."
+            python automation/process_responses.py --sheet-csv-url "$SHEET_URL"
+          else
+            echo "Rebuilding all reports and aggregate index..."
+            python automation/process_responses.py
+          fi
+
+      - name: Commit and Push Generated Reports
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/ user-*.html index.html data/responses.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto-generate psychological welfare report [skip ci]"
+            git push origin main
+          fi

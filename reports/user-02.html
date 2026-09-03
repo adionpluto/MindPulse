@@ -1,76 +1,741 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Assessment Report - User 01</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindPulse Psychological Report | user-02</title>
+  <!-- Google Fonts & Chart.js -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f7f6;
-      color: #333;
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --brand-primary: #4f46e5;
+      --brand-secondary: #6366f1;
+      --brand-accent: #06b6d4;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    html.dark {
+      --bg-primary: #090d16;
+      --bg-card: #131b2e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #1e293b;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
-    .card {
-      max-width: 700px;
-      margin: 30px auto;
-      background: white;
-      padding: 30px;
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 60px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    /* Top Navigation Header */
+    header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
-    h1 { color: #2c3e50; margin-top: 0; }
-    h2 { color: #3498db; border-bottom: 2px solid #ecf0f1; padding-bottom: 5px; }
-    .badge {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: white;
-      font-size: 0.9em;
+      font-weight: 800;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.35);
     }
-    .moderate { background-color: #f39c12; }
-    .high { background-color: #e74c3c; }
-    .low { background-color: #2ecc71; }
-    ul { line-height: 1.6; }
-    footer {
-      margin-top: 20px;
-      font-size: 0.8em;
-      color: #7f8c8d;
-      text-align: center;
+    .logo-text h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .logo-text p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: var(--border-color);
+      transform: translateY(-1px);
+    }
+    .btn-primary {
+      background: var(--brand-primary);
+      color: white;
+      border-color: var(--brand-primary);
+    }
+    .btn-primary:hover {
+      background: var(--brand-secondary);
+    }
+
+    /* Hero Banner */
+    .report-hero {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 32px;
+      margin-top: 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .badge-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+      align-items: center;
+    }
+    .badge {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .badge-primary { background: rgba(79, 70, 229, 0.12); color: var(--brand-primary); }
+    .badge-success { background: rgba(16, 185, 129, 0.12); color: var(--success); }
+    .badge-warning { background: rgba(245, 158, 11, 0.12); color: var(--warning); }
+    .badge-danger  { background: rgba(239, 68, 68, 0.12); color: var(--danger); }
+
+    .hero-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+    .hero-summary {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      background: rgba(99, 102, 241, 0.05);
+      border-left: 4px solid var(--brand-primary);
+      padding: 14px 18px;
+      border-radius: 0 12px 12px 0;
+      line-height: 1.7;
+    }
+
+    /* Metric Cards Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease;
+    }
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .metric-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .metric-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .metric-icon {
+      font-size: 1.25rem;
+    }
+    .metric-value-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .metric-value {
+      font-size: 1.9rem;
+      font-weight: 800;
+    }
+    .metric-unit {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .metric-progress {
+      height: 8px;
+      width: 100%;
+      background: var(--border-color);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 1s ease-in-out;
+    }
+
+    /* Visualization Section */
+    .viz-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+    @media (max-width: 800px) {
+      .viz-grid { grid-template-columns: 1fr; }
+    }
+    .viz-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .viz-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .viz-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    /* Gauge Meter */
+    .gauge-wrapper {
+      padding: 10px 0;
+    }
+    .gauge-bar {
+      height: 18px;
+      border-radius: 9999px;
+      background: linear-gradient(to right, #10b981 0%, #3b82f6 30%, #f59e0b 70%, #ef4444 100%);
+      position: relative;
+      margin: 30px 0 15px 0;
+    }
+    .gauge-needle {
+      position: absolute;
+      top: -8px;
+      width: 4px;
+      height: 34px;
+      background: var(--text-main);
+      border-radius: 2px;
+      transform: translateX(-50%);
+      box-shadow: 0 0 6px rgba(0,0,0,0.5);
+    }
+    .gauge-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Action Plan Cards */
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin: 36px 0 18px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+    }
+    .plan-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+    .plan-phase {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--brand-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .plan-heading {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .plan-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Driver & Qualitative Insights */
+    .insights-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 24px;
+      margin-top: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .insights-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 14px;
+    }
+    @media (max-width: 680px) {
+      .insights-grid { grid-template-columns: 1fr; }
+    }
+    .insight-item {
+      padding: 16px;
+      background: var(--bg-primary);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+    .insight-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .insight-text {
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    /* Crisis Helplines */
+    .crisis-card {
+      margin-top: 36px;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.04);
+      border-radius: 18px;
+      padding: 24px;
+    }
+    .crisis-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--danger);
+      font-weight: 800;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+    .crisis-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .helpline-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .helpline-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* Print Rules */
+    @media print {
+      header, .nav-actions, .theme-btn { display: none !important; }
+      body { background: white !important; color: black !important; padding: 0 !important; }
+      .container { max-width: 100% !important; padding: 0 !important; }
+      .report-hero, .metric-card, .viz-card, .plan-card, .insights-card, .crisis-card {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1>Psychological Assessment Report</h1>
-    <p><strong>Participant ID:</strong> USER-01</p>
-    <p><strong>Date:</strong> October 2026</p>
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <a href="../index.html" class="logo-group">
+        <div class="logo-icon">MP</div>
+        <div class="logo-text">
+          <h1>MindPulse Psyche-Reports</h1>
+          <p>Community Engagement Project (CEP)</p>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <a href="../index.html" class="btn">?? All Reports</a>
+        <button onclick="window.print()" class="btn btn-primary">??? Print / Save PDF</button>
+        <button onclick="toggleTheme()" class="btn" id="themeToggleBtn">??</button>
+      </div>
+    </div>
+  </header>
 
-    <h2>1. Behavioral Traits</h2>
-    <p>Displays high empathetic responsiveness with a tendency toward perfectionism during group tasks. High resilience under short-term deadline pressure.</p>
+  <div class="container">
 
-    <h2>2. Dominant Emotional Drivers</h2>
-    <p>Primary driver is <strong>Intrinsic Motivation</strong>; secondary driver is <strong>Situational Anxiety</strong> triggered by ambiguous tasks.</p>
+    <!-- Hero Assessment Banner -->
+    <div class="report-hero">
+      <div class="hero-glow"></div>
+      <div class="badge-bar">
+        <span class="badge badge-primary">ID: user-02</span>
+        <span class="badge badge-primary">Balanced / Manageable</span>
+        <span class="badge badge-primary">Assessment Date: 2026-09-02</span>
+        <span class="badge badge-primary">Cohort: CEP-2026-Cohort A</span>
+      </div>
+      <h2 class="hero-title">The Balanced Harmonizer</h2>
+      <p class="hero-subtitle">Moderate Stability with Growth Potential</p>
+      <div class="hero-summary">
+        You are navigating daily demands with a moderate degree of stability. While your emotional and stress baselines are manageable, introducing structured wellness rituals will amplify your focus and resilience.
+      </div>
+    </div>
 
-    <h2>3. Stress & Anxiety Metrics</h2>
-    <p>Stress Level: <span class="badge moderate">Moderate (6/10)</span></p>
-    <p>Anxiety Level: <span class="badge low">Low (3/10)</span></p>
+    <!-- 4 Core Metrics Grid -->
+    <div class="metrics-grid">
+      <!-- Metric 1: Stress & Overwhelm -->
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-title">Stress & Overwhelm</span>
+          <span class="metric-icon">?</span>
+        </div>
+        <div class="metric-value-row">
+          <span class="metric-value">38</span>
+          <span class="metric-unit">/ 100</span>
+        </div>
+        <div class="metric-progress">
+          <div class="progress-fill" style="width: 38%; background-color: #3b82f6;"></div>
+        </div>
+      </div>
 
-    <h2>4. Tailored Recommendations</h2>
-    <ul>
-      <li><strong>Structured Task Planning:</strong> Break ambiguous tasks into smaller 25-minute sprints (Pomodoro technique).</li>
-      <li><strong>Mindfulness Practice:</strong> Spend 5 minutes daily on box-breathing exercises before study sessions.</li>
-      <li><strong>Work-Rest Boundaries:</strong> Set a strict digital curfew after 10 PM to encourage recovery.</li>
-    </ul>
+      <!-- Metric 2: Emotional Resilience -->
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-title">Emotional Resilience</span>
+          <span class="metric-icon">??</span>
+        </div>
+        <div class="metric-value-row">
+          <span class="metric-value">62</span>
+          <span class="metric-unit">/ 100</span>
+        </div>
+        <div class="metric-progress">
+          <div class="progress-fill" style="width: 62%; background-color: #3b82f6;"></div>
+        </div>
+      </div>
 
-    <footer>
-      <hr>
-      <p><em>Disclaimer: This report is generated for academic project purposes only and does not serve as a clinical medical diagnosis.</em></p>
+      <!-- Metric 3: Vitality & Focus -->
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-title">Vitality & Focus</span>
+          <span class="metric-icon">??</span>
+        </div>
+        <div class="metric-value-row">
+          <span class="metric-value">75</span>
+          <span class="metric-unit">/ 100</span>
+        </div>
+        <div class="metric-progress">
+          <div class="progress-fill" style="width: 75%; background-color: #10b981;"></div>
+        </div>
+      </div>
+
+      <!-- Metric 4: Coping Adaptability -->
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-title">Coping Adaptability</span>
+          <span class="metric-icon">??</span>
+        </div>
+        <div class="metric-value-row">
+          <span class="metric-value">50</span>
+          <span class="metric-unit">/ 100</span>
+        </div>
+        <div class="metric-progress">
+          <div class="progress-fill" style="width: 50%; background-color: #3b82f6;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visualizations: Radar Chart & Stress Gauge -->
+    <div class="viz-grid">
+      <div class="viz-card">
+        <div class="viz-card-header">
+          <h3 class="viz-card-title">Psychological Profile vs Benchmark</h3>
+        </div>
+        <canvas id="radarChart" style="max-height: 280px;"></canvas>
+      </div>
+
+      <div class="viz-card">
+        <div class="viz-card-header">
+          <h3 class="viz-card-title">Stress & Nervous Load Spectrum</h3>
+        </div>
+        <div class="gauge-wrapper">
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px;">
+            Current load: <strong>Moderate / Balanced</strong> (38/100).
+          </p>
+          <div class="gauge-bar">
+            <div class="gauge-needle" style="left: 38%;"></div>
+          </div>
+          <div class="gauge-labels">
+            <span>Optimal (0-30)</span>
+            <span>Balanced (31-50)</span>
+            <span>Elevated (51-70)</span>
+            <span>Severe (71-100)</span>
+          </div>
+        </div>
+        <div style="margin-top: 20px; font-size: 0.85rem; color: var(--text-muted);">
+          ?? <em>Stress levels are currently balanced and within healthy adaptive thresholds for daily productivity.</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- Qualitative Insights -->
+    <div class="insights-card">
+      <h3 style="font-size: 1.1rem; font-weight: 700;">Identified Drivers & Response Tendencies</h3>
+      <div class="insights-grid">
+        <div class="insight-item">
+          <div class="insight-label">Primary Reported Stressors</div>
+          <div class="insight-text">Minor project submissions, but generally balanced.</div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-label">Active Peace & Restoration Anchors</div>
+          <div class="insight-text">Weight training, reading fiction, and spending weekend time with friends.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tailored 3-Phase Action Plan -->
+    <h2 class="section-title">?? Personalized Self-Improvement Roadmap</h2>
+    <div class="plan-grid">
+      <div class="plan-card"><div class="plan-phase">Phase 1: Immediate Relief (Day 1)</div><h3 class="plan-heading">5-4-3-2-1 Sensory Grounding</h3><p class="plan-body">Engage your five senses to ground your mind in the present physical space whenever feeling mentally scattered.</p></div>
+<div class="plan-card"><div class="plan-phase">Phase 2: Short-Term Habit (Week 1)</div><h3 class="plan-heading">Solution-Focused Action Mapping</h3><p class="plan-body">When facing complex hurdles, break them into the smallest 15-minute micro-tasks to prevent paralysis and build momentum.</p></div>
+<div class="plan-card"><div class="plan-phase">Phase 3: Sustainable Growth (Month 1+)</div><h3 class="plan-heading">Proactive Recovery Routine</h3><p class="plan-body">Schedule active relaxation (nature walks, light yoga, journaling) on your calendar just as you would an academic or work deadline.</p></div>
+    </div>
+
+    <!-- Crisis Support Helplines -->
+    <div class="crisis-card">
+      <div class="crisis-header">
+        <span>???</span>
+        <span>24/7 Welfare & Confidential Crisis Support</span>
+      </div>
+      <p class="crisis-text">
+        MindPulse is an educational community welfare tool. If you or someone you know is feeling overwhelmed or experiencing acute distress, immediate free and confidential help is available.
+      </p>
+      <div class="helpline-pills">
+        <div class="helpline-pill"><strong>US/CA:</strong> 988 Lifeline (Call/Text 988)</div>
+        <div class="helpline-pill"><strong>Text Line:</strong> Text HOME to 741741</div>
+        <div class="helpline-pill"><strong>India:</strong> KIRAN (1800-599-0019) / Tele-MANAS (14416)</div>
+        <div class="helpline-pill"><strong>UK:</strong> Samaritans (116 123)</div>
+        <div class="helpline-pill"><strong>Global:</strong> findahelpline.com</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="margin-top: 40px; text-align: center; font-size: 0.78rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 20px;">
+      <p>MindPulse Psyche-Reports | Community Engagement Project (CEP) Psychological Welfare Assessment</p>
+      <p style="margin-top: 4px;">Data collected strictly for participant personal development. Not a medical diagnostic device.</p>
     </footer>
+
   </div>
 
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const btn = document.getElementById('themeToggleBtn');
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        html.classList.add('light');
+        btn.innerText = '??';
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.remove('light');
+        html.classList.add('dark');
+        btn.innerText = '??';
+        localStorage.setItem('theme', 'dark');
+      }
+      updateChartTheme();
+    }
+
+    if (localStorage.getItem('theme') === 'dark' || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      const btn = document.getElementById('themeToggleBtn');
+      if (btn) btn.innerText = '??';
+    }
+
+    let radarChartInstance = null;
+    function initRadarChart() {
+      const ctx = document.getElementById('radarChart').getContext('2d');
+      const isDark = document.documentElement.classList.contains('dark');
+      const textColor = isDark ? '#94a3b8' : '#64748b';
+      const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+
+      radarChartInstance = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: ['Stress Balance', 'Emotional Resilience', 'Vitality & Focus', 'Coping Strategy', 'Social Support'],
+          datasets: [
+            {
+              label: 'Your Assessment',
+              data: [62, 62, 75, 50, 75],
+              backgroundColor: 'rgba(79, 70, 229, 0.25)',
+              borderColor: '#4f46e5',
+              pointBackgroundColor: '#4f46e5',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: '#4f46e5',
+              borderWidth: 2
+            },
+            {
+              label: 'CEP Cohort Benchmark',
+              data: [55, 65, 60, 55, 58],
+              backgroundColor: 'rgba(6, 182, 212, 0.10)',
+              borderColor: '#06b6d4',
+              borderDash: [4, 4],
+              pointBackgroundColor: '#06b6d4',
+              borderWidth: 1.5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              angleLines: { color: gridColor },
+              grid: { color: gridColor },
+              pointLabels: {
+                color: textColor,
+                font: { size: 11, weight: '600', family: 'Plus Jakarta Sans' }
+              },
+              ticks: {
+                display: false,
+                min: 0,
+                max: 100,
+                stepSize: 20
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: textColor,
+                font: { family: 'Plus Jakarta Sans', weight: '600', size: 12 }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function updateChartTheme() {
+      if (radarChartInstance) {
+        radarChartInstance.destroy();
+        initRadarChart();
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', initRadarChart);
+  </script>
 </body>
 </html>

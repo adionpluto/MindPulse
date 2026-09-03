@@ -1,0 +1,283 @@
+{
+  "dimensions": {
+    "stress_anxiety": {
+      "name": "Stress & Overwhelm",
+      "description": "Measures acute tension, cognitive overload, and perceived inability to manage current demands.",
+      "benchmark": 45,
+      "inverse": true
+    },
+    "emotional_wellbeing": {
+      "name": "Emotional Resilience",
+      "description": "Assesses emotional regulation, baseline mood stability, optimism, and inner fortitude.",
+      "benchmark": 65,
+      "inverse": false
+    },
+    "energy_vitality": {
+      "name": "Vitality & Focus",
+      "description": "Measures physical energy, restorative sleep, concentration stamina, and daily motivation.",
+      "benchmark": 60,
+      "inverse": false
+    },
+    "coping_adaptability": {
+      "name": "Coping Adaptability",
+      "description": "Evaluates the use of proactive, problem-solving, and constructive coping mechanisms vs avoidant habits.",
+      "benchmark": 55,
+      "inverse": false
+    },
+    "social_connectivity": {
+      "name": "Social Anchoring",
+      "description": "Gauges perceived social support, communication with peers/family, and feelings of belonging.",
+      "benchmark": 58,
+      "inverse": false
+    }
+  },
+  "likert_map": {
+    "never": 1,
+    "rarely": 2,
+    "sometimes": 3,
+    "often": 4,
+    "always": 5,
+    "almost never": 1,
+    "fairly often": 4,
+    "very often": 5,
+    "strongly disagree": 1,
+    "disagree": 2,
+    "neutral": 3,
+    "agree": 4,
+    "strongly agree": 5,
+    "not at all": 1,
+    "several days": 2,
+    "more than half the days": 4,
+    "nearly every day": 5,
+    "poor": 1,
+    "fair": 2,
+    "good": 4,
+    "excellent": 5,
+    "low": 1,
+    "moderate": 3,
+    "high": 4,
+    "very high": 5
+  },
+  "question_keywords": {
+    "stress_anxiety": [
+      "stress",
+      "anxious",
+      "anxiety",
+      "overwhelm",
+      "nervous",
+      "pressure",
+      "panic",
+      "worry",
+      "racing thoughts",
+      "tense",
+      "burnout"
+    ],
+    "emotional_wellbeing": [
+      "happy",
+      "content",
+      "calm",
+      "optimistic",
+      "mood",
+      "hopeless",
+      "sad",
+      "irritable",
+      "depressed",
+      "peace of mind",
+      "emotional stability",
+      "satisfied"
+    ],
+    "energy_vitality": [
+      "sleep",
+      "tired",
+      "fatigue",
+      "energy",
+      "exhausted",
+      "focus",
+      "concentrate",
+      "motivation",
+      "rest",
+      "burnout"
+    ],
+    "coping_adaptability": [
+      "cope",
+      "problem",
+      "manage",
+      "handle",
+      "adapt",
+      "avoid",
+      "exercise",
+      "meditation",
+      "hobby",
+      "routine",
+      "strategy"
+    ],
+    "social_connectivity": [
+      "friend",
+      "family",
+      "lonely",
+      "isolated",
+      "support",
+      "talk",
+      "connected",
+      "relationship",
+      "peer",
+      "social"
+    ]
+  },
+  "personas": [
+    {
+      "id": "thriving_anchor",
+      "title": "The Resilient Anchor",
+      "tagline": "High Emotional Balance & Strong Proactive Coping",
+      "condition": "stress < 35 and emotional >= 65 and coping >= 60",
+      "summary": "You demonstrate exceptional emotional fortitude, steady vitality, and healthy coping mechanisms. You maintain healthy boundaries under pressure and serve as a stabilizing presence for those around you."
+    },
+    {
+      "id": "strained_achiever",
+      "title": "The High-Functioning Overachiever",
+      "tagline": "Elevated Drive with Hidden Fatigue & Emerging Overwhelm",
+      "condition": "stress >= 60 and energy < 50",
+      "summary": "You possess strong drive and capability, but your nervous system is carrying a significant accumulated load. High cognitive demands paired with insufficient restorative recovery are pushing you toward burnout."
+    },
+    {
+      "id": "overwhelmed_seeker",
+      "title": "The Overwhelmed Navigator",
+      "tagline": "Elevated Stress & Acute Overload in Transition",
+      "condition": "stress >= 65",
+      "summary": "You are currently experiencing heightened psychological strain and cognitive overload. Everyday stressors feel magnified, making immediate nervous system regulation and restorative micro-habits essential."
+    },
+    {
+      "id": "fatigued_drifter",
+      "title": "The Depleted Explorer",
+      "tagline": "Low Energy Reserve & Sluggish Motivation",
+      "condition": "energy < 40 and emotional < 50",
+      "summary": "Your vitality reserves are currently running on empty. Disrupted sleep, routine fatigue, or sustained mental exertion have depleted your physical stamina and emotional spark."
+    },
+    {
+      "id": "balanced_harmonizer",
+      "title": "The Balanced Harmonizer",
+      "tagline": "Moderate Stability with Growth Potential",
+      "condition": "default",
+      "summary": "You are navigating daily demands with a moderate degree of stability. While your emotional and stress baselines are manageable, introducing structured wellness rituals will amplify your focus and resilience."
+    }
+  ],
+  "recommendations": {
+    "stress_anxiety": [
+      {
+        "phase": "Immediate Relief (Day 1)",
+        "action": "Physiological Sigh & 4-7-8 Breathwork",
+        "detail": "Perform 3 minutes of double-inhalation followed by extended exhalation to down-regulate acute sympathetic nervous arousal."
+      },
+      {
+        "phase": "Short-Term Reset (Week 1)",
+        "action": "Cognitive Brain Dump & Task Triage",
+        "detail": "Externalize mental chatter onto paper each evening. Categorize demands into actionable vs uncontrollable buckets to curb bedtime rumination."
+      },
+      {
+        "phase": "Sustainable Habit (Month 1+)",
+        "action": "Strict Digital Boundary & Cortisol Buffer",
+        "detail": "Enforce a screen-free window 45 minutes prior to sleep to prevent circadian disruption and nocturnal stress spikes."
+      }
+    ],
+    "energy_vitality": [
+      {
+        "phase": "Immediate Relief (Day 1)",
+        "action": "Morning Lux Light & Hydration Trigger",
+        "detail": "Expose eyes to natural outdoor light for 10-15 minutes within 30 minutes of waking and drink 500ml water to anchor circadian alertness."
+      },
+      {
+        "phase": "Short-Term Reset (Week 1)",
+        "action": "90-Minute Ultradian Rhythm Cycles",
+        "detail": "Work in 90-minute focused blocks followed by mandatory 10-minute active non-screen restoration (stretching, pacing, breathing)."
+      },
+      {
+        "phase": "Sustainable Habit (Month 1+)",
+        "action": "Sleep Sanctuary Architecture",
+        "detail": "Optimize sleep environment (temperature ~19\u00b0C/66\u00b0F, blackout curtains, white noise) to maximize restorative delta-wave sleep."
+      }
+    ],
+    "emotional_wellbeing": [
+      {
+        "phase": "Immediate Relief (Day 1)",
+        "action": "Micro-Gratitude & Savoring Practice",
+        "detail": "Identify three distinct moments of comfort or accomplishment from today, mentally acknowledging why they mattered."
+      },
+      {
+        "phase": "Short-Term Reset (Week 1)",
+        "action": "Cognitive Reframing of Self-Criticism",
+        "detail": "Notice self-critical inner dialogues. Intentionally reframe them with empathetic, constructive coaching language."
+      },
+      {
+        "phase": "Sustainable Habit (Month 1+)",
+        "action": "Values-Aligned Weekly Milestone",
+        "detail": "Dedicate at least 2 hours each weekend to a hobby or creative outlet solely for intrinsic fulfillment, detached from performance."
+      }
+    ],
+    "coping_adaptability": [
+      {
+        "phase": "Immediate Relief (Day 1)",
+        "action": "5-4-3-2-1 Sensory Grounding",
+        "detail": "Engage your five senses to ground your mind in the present physical space whenever feeling mentally scattered."
+      },
+      {
+        "phase": "Short-Term Reset (Week 1)",
+        "action": "Solution-Focused Action Mapping",
+        "detail": "When facing complex hurdles, break them into the smallest 15-minute micro-tasks to prevent paralysis and build momentum."
+      },
+      {
+        "phase": "Sustainable Habit (Month 1+)",
+        "action": "Proactive Recovery Routine",
+        "detail": "Schedule active relaxation (nature walks, light yoga, journaling) on your calendar just as you would an academic or work deadline."
+      }
+    ],
+    "social_connectivity": [
+      {
+        "phase": "Immediate Relief (Day 1)",
+        "action": "Low-Friction Connection Signal",
+        "detail": "Send a quick supportive text or audio message to a friend or mentor with zero expectation of a prolonged conversation."
+      },
+      {
+        "phase": "Short-Term Reset (Week 1)",
+        "action": "Shared Space Immersion",
+        "detail": "Work or study in communal environments (libraries, student lounges, cafes) to experience social presence without social strain."
+      },
+      {
+        "phase": "Sustainable Habit (Month 1+)",
+        "action": "Weekly Authenticity Circle",
+        "detail": "Maintain a recurring check-in with a trusted confidant where you can honestly share ongoing feelings and mutual support."
+      }
+    ]
+  },
+  "crisis_helplines": [
+    {
+      "region": "United States / Canada",
+      "service": "988 Suicide & Crisis Lifeline",
+      "contact": "Call or Text 988 (24/7, Free & Confidential)"
+    },
+    {
+      "region": "Global Crisis Text",
+      "service": "Crisis Text Line",
+      "contact": "Text HOME to 741741"
+    },
+    {
+      "region": "India",
+      "service": "KIRAN Mental Health Line",
+      "contact": "1800-599-0019 (24/7 Toll-Free)"
+    },
+    {
+      "region": "India",
+      "service": "Tele-MANAS Government Helpline",
+      "contact": "14416 / 1800-891-4416"
+    },
+    {
+      "region": "United Kingdom",
+      "service": "Samaritans",
+      "contact": "Call 116 123 (Free, 24/7)"
+    },
+    {
+      "region": "International Directory",
+      "service": "Befrienders Worldwide & Find A Helpline",
+      "contact": "https://findahelpline.com"
+    }
+  ]
+}
