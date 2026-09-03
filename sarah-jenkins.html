@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MindPulse Report | {{participant_name}}</title>
+  <title>MindPulse Report | Sarah Jenkins</title>
   <!-- Google Fonts & Chart.js -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -461,7 +461,7 @@
   <!-- Header -->
   <header>
     <div class="header-inner">
-      <a href="../index.html" class="logo-group">
+      <a href="index.html" class="logo-group">
         <div class="logo-icon">MP</div>
         <div class="logo-text">
           <h1>MindPulse Psyche-Reports</h1>
@@ -469,7 +469,7 @@
         </div>
       </a>
       <div class="nav-actions">
-        <a href="../index.html" class="btn"> All Reports</a>
+        <a href="index.html" class="btn"> All Reports</a>
         <button onclick="window.print()" class="btn btn-primary">? Print / Save PDF</button>
         <button onclick="toggleTheme()" class="btn" id="themeToggleBtn"></button>
       </div>
@@ -482,17 +482,17 @@
     <div class="report-hero">
       <div class="hero-glow"></div>
       <div class="badge-bar">
-        <span class="badge badge-primary">Participant: {{participant_name}}</span>
-        <span class="badge badge-primary">Age: {{participant_age}}</span>
-        <span class="badge badge-primary">Gender: {{participant_gender}}</span>
-        <span class="badge badge-{{status_badge_type}}">{{status_badge_text}}</span>
-        <span class="badge badge-primary">Date: {{assessment_date}}</span>
-        <span class="badge badge-primary">{{cohort}}</span>
+        <span class="badge badge-primary">Participant: Sarah Jenkins</span>
+        <span class="badge badge-primary">Age: 20</span>
+        <span class="badge badge-primary">Gender: Female</span>
+        <span class="badge badge-primary">Balanced / Manageable</span>
+        <span class="badge badge-primary">Date: 2026-09-02</span>
+        <span class="badge badge-primary">CEP Cohort 2026</span>
       </div>
-      <h2 class="hero-title">{{persona_title}}</h2>
-      <p class="hero-subtitle">{{persona_tagline}}</p>
+      <h2 class="hero-title">The Balanced Harmonizer</h2>
+      <p class="hero-subtitle">Moderate Stability with Growth Potential</p>
       <div class="hero-summary">
-        {{persona_summary}}
+        You are navigating daily demands with a moderate degree of stability. While your emotional and stress baselines are manageable, introducing structured wellness rituals will amplify your focus and resilience.
       </div>
     </div>
 
@@ -505,11 +505,11 @@
           <span class="metric-icon">?</span>
         </div>
         <div class="metric-value-row">
-          <span class="metric-value">{{score_stress}}</span>
+          <span class="metric-value">38</span>
           <span class="metric-unit">/ 100</span>
         </div>
         <div class="metric-progress">
-          <div class="progress-fill" style="width: {{score_stress}}%; background-color: {{color_stress}};"></div>
+          <div class="progress-fill" style="width: 38%; background-color: #3b82f6;"></div>
         </div>
       </div>
 
@@ -520,11 +520,11 @@
           <span class="metric-icon"></span>
         </div>
         <div class="metric-value-row">
-          <span class="metric-value">{{score_emotional}}</span>
+          <span class="metric-value">62</span>
           <span class="metric-unit">/ 100</span>
         </div>
         <div class="metric-progress">
-          <div class="progress-fill" style="width: {{score_emotional}}%; background-color: {{color_emotional}};"></div>
+          <div class="progress-fill" style="width: 62%; background-color: #3b82f6;"></div>
         </div>
       </div>
 
@@ -535,11 +535,11 @@
           <span class="metric-icon"></span>
         </div>
         <div class="metric-value-row">
-          <span class="metric-value">{{score_energy}}</span>
+          <span class="metric-value">75</span>
           <span class="metric-unit">/ 100</span>
         </div>
         <div class="metric-progress">
-          <div class="progress-fill" style="width: {{score_energy}}%; background-color: {{color_energy}};"></div>
+          <div class="progress-fill" style="width: 75%; background-color: #10b981;"></div>
         </div>
       </div>
 
@@ -550,11 +550,11 @@
           <span class="metric-icon"></span>
         </div>
         <div class="metric-value-row">
-          <span class="metric-value">{{score_coping}}</span>
+          <span class="metric-value">50</span>
           <span class="metric-unit">/ 100</span>
         </div>
         <div class="metric-progress">
-          <div class="progress-fill" style="width: {{score_coping}}%; background-color: {{color_coping}};"></div>
+          <div class="progress-fill" style="width: 50%; background-color: #3b82f6;"></div>
         </div>
       </div>
     </div>
@@ -574,10 +574,10 @@
         </div>
         <div class="gauge-wrapper">
           <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px;">
-            Current load: <strong>{{stress_level_label}}</strong> ({{score_stress}}/100).
+            Current load: <strong>Moderate / Balanced</strong> (38/100).
           </p>
           <div class="gauge-bar">
-            <div class="gauge-needle" style="left: {{score_stress}}%;"></div>
+            <div class="gauge-needle" style="left: 38%;"></div>
           </div>
           <div class="gauge-labels">
             <span>Optimal (0-30)</span>
@@ -587,7 +587,7 @@
           </div>
         </div>
         <div style="margin-top: 20px; font-size: 0.85rem; color: var(--text-muted);">
-           <em>{{stress_advice_snippet}}</em>
+           <em>Stress levels are currently balanced and within healthy adaptive thresholds for daily productivity.</em>
         </div>
       </div>
     </div>
@@ -598,11 +598,11 @@
       <div class="insights-grid">
         <div class="insight-item">
           <div class="insight-label">Primary Reported Stressors</div>
-          <div class="insight-text">{{reported_stressors}}</div>
+          <div class="insight-text">Minor project deadlines, but generally balanced.</div>
         </div>
         <div class="insight-item">
           <div class="insight-label">Active Peace & Restoration Anchors</div>
-          <div class="insight-text">{{reported_coping_anchors}}</div>
+          <div class="insight-text">Weight training, reading fiction, and spending weekend time with friends.</div>
         </div>
       </div>
     </div>
@@ -610,7 +610,9 @@
     <!-- Tailored 3-Phase Action Plan -->
     <h2 class="section-title"> Personalized Self-Improvement Roadmap</h2>
     <div class="plan-grid">
-      {{action_plan_cards}}
+      <div class="plan-card"><div class="plan-phase">Phase 1: Immediate Relief (Day 1)</div><h3 class="plan-heading">5-4-3-2-1 Sensory Grounding</h3><p class="plan-body">Engage your five senses to ground your mind in the present physical space whenever feeling mentally scattered.</p></div>
+<div class="plan-card"><div class="plan-phase">Phase 2: Short-Term Habit (Week 1)</div><h3 class="plan-heading">Solution-Focused Action Mapping</h3><p class="plan-body">When facing complex hurdles, break them into the smallest 15-minute micro-tasks to prevent paralysis and build momentum.</p></div>
+<div class="plan-card"><div class="plan-phase">Phase 3: Sustainable Growth (Month 1+)</div><h3 class="plan-heading">Proactive Recovery Routine</h3><p class="plan-body">Schedule active relaxation (nature walks, light yoga, journaling) on your calendar just as you would an academic or work deadline.</p></div>
     </div>
 
     <!-- Crisis Support Helplines -->
@@ -677,7 +679,7 @@
           datasets: [
             {
               label: 'Your Assessment',
-              data: [{{radar_stress_inv}}, {{score_emotional}}, {{score_energy}}, {{score_coping}}, {{score_social}}],
+              data: [62, 62, 75, 50, 75],
               backgroundColor: 'rgba(79, 70, 229, 0.25)',
               borderColor: '#4f46e5',
               pointBackgroundColor: '#4f46e5',

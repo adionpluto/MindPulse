@@ -1,50 +1,86 @@
 [
   {
-    "submission_id": "user-01",
+    "submission_id": "aditya-choubey",
     "timestamp": "2026-09-01T10:15:00Z",
-    "participant_name": "Participant 01",
-    "cohort": "CEP-2026-Cohort A",
+    "participant_name": "Aditya Choubey",
+    "age": "21",
+    "gender": "Male",
+    "cohort": "CEP Cohort 2026",
     "answers": {
+      "Full Name": "Aditya Choubey",
+      "Age": "21",
+      "Gender": "Male",
       "How often do you feel overwhelmed by your daily responsibilities or academic deadlines?": "Often",
       "How frequently do you experience physical tension, nervousness, or racing thoughts?": "Very Often",
       "How would you rate your overall mood stability and positivity over the past two weeks?": "Neutral",
       "How often do you wake up feeling well-rested and energized for the day?": "Rarely",
-      "When facing intense stress, how effectively do you use proactive coping strategies (e.g., exercise, planning, mindfulness)?": "Sometimes",
+      "When facing intense stress, how effectively do you use proactive coping strategies?": "Sometimes",
       "How connected and supported do you feel by your friends, family, or community?": "Agree",
       "What are your primary sources of stress or concern currently?": "Exam deadlines, future career uncertainty, and irregular sleep schedules.",
-      "What activities or habits currently bring you the most peace of mind?": "Listening to music and occasional evening walks."
+      "What activities or habits currently bring you the most peace of mind?": "Listening to music and evening walks."
     }
   },
   {
-    "submission_id": "user-02",
+    "submission_id": "sarah-jenkins",
     "timestamp": "2026-09-02T14:30:00Z",
-    "participant_name": "Participant 02",
-    "cohort": "CEP-2026-Cohort A",
+    "participant_name": "Sarah Jenkins",
+    "age": "20",
+    "gender": "Female",
+    "cohort": "CEP Cohort 2026",
     "answers": {
+      "Full Name": "Sarah Jenkins",
+      "Age": "20",
+      "Gender": "Female",
       "How often do you feel overwhelmed by your daily responsibilities or academic deadlines?": "Rarely",
       "How frequently do you experience physical tension, nervousness, or racing thoughts?": "Almost Never",
       "How would you rate your overall mood stability and positivity over the past two weeks?": "Good",
       "How often do you wake up feeling well-rested and energized for the day?": "Often",
-      "When facing intense stress, how effectively do you use proactive coping strategies (e.g., exercise, planning, mindfulness)?": "Often",
+      "When facing intense stress, how effectively do you use proactive coping strategies?": "Often",
       "How connected and supported do you feel by your friends, family, or community?": "Strongly Agree",
-      "What are your primary sources of stress or concern currently?": "Minor project submissions, but generally balanced.",
+      "What are your primary sources of stress or concern currently?": "Minor project deadlines, but generally balanced.",
       "What activities or habits currently bring you the most peace of mind?": "Weight training, reading fiction, and spending weekend time with friends."
     }
   },
   {
-    "submission_id": "user-03",
+    "submission_id": "marcus-vance",
     "timestamp": "2026-09-03T18:45:00Z",
-    "participant_name": "Participant 03",
-    "cohort": "CEP-2026-Cohort B",
+    "participant_name": "Marcus Vance",
+    "age": "22",
+    "gender": "Male",
+    "cohort": "CEP Cohort 2026",
     "answers": {
+      "Full Name": "Marcus Vance",
+      "Age": "22",
+      "Gender": "Male",
       "How often do you feel overwhelmed by your daily responsibilities or academic deadlines?": "Always",
       "How frequently do you experience physical tension, nervousness, or racing thoughts?": "Always",
       "How would you rate your overall mood stability and positivity over the past two weeks?": "Poor",
       "How often do you wake up feeling well-rested and energized for the day?": "Never",
-      "When facing intense stress, how effectively do you use proactive coping strategies (e.g., exercise, planning, mindfulness)?": "Rarely",
+      "When facing intense stress, how effectively do you use proactive coping strategies?": "Rarely",
       "How connected and supported do you feel by your friends, family, or community?": "Disagree",
       "What are your primary sources of stress or concern currently?": "Feeling isolated, constant burnout, and fear of failing upcoming assessments.",
       "What activities or habits currently bring you the most peace of mind?": "Watching YouTube late into the night, though it makes me sleep deprived."
+    }
+  },
+  {
+    "submission_id": "elena-rostova",
+    "timestamp": "2026-09-04T09:00:00Z",
+    "participant_name": "Elena Rostova",
+    "age": "23",
+    "gender": "Female",
+    "cohort": "CEP Cohort 2026",
+    "answers": {
+      "Full Name": "Elena Rostova",
+      "Age": "23",
+      "Gender": "Female",
+      "How often do you feel overwhelmed by your daily responsibilities or academic deadlines?": "Sometimes",
+      "How frequently do you experience physical tension, nervousness, or racing thoughts?": "Sometimes",
+      "How would you rate your overall mood stability and positivity over the past two weeks?": "Good",
+      "How often do you wake up feeling well-rested and energized for the day?": "Fairly Often",
+      "When facing intense stress, how effectively do you use proactive coping strategies?": "Agree",
+      "How connected and supported do you feel by your friends, family, or community?": "Good",
+      "What are your primary sources of stress or concern currently?": "Balancing internship prep and coursework.",
+      "What activities or habits currently bring you the most peace of mind?": "Morning meditation and jogging."
     }
   }
 ]

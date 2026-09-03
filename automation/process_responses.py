@@ -21,6 +21,11 @@ def save_json(filepath, data):
     with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
+def slugify(text):
+    text = re.sub(r'[^\w\s-]', '', str(text).strip().lower())
+    slug = re.sub(r'[-\s]+', '-', text)
+    return slug if slug else 'participant'
+
 def parse_likert(val, likert_map):
     if isinstance(val, (int, float)):
         return max(1, min(5, float(val)))
@@ -51,9 +56,21 @@ def score_submission(submission, config):
     open_stressors = []
     open_anchors = []
 
+    # Extract demographics if in answers
+    p_name = submission.get('participant_name')
+    age = submission.get('age', 'N/A')
+    gender = submission.get('gender', 'N/A')
+
     for q_text, ans_val in answers.items():
         q_lower = q_text.lower()
         ans_str = str(ans_val)
+
+        if not p_name and any(k in q_lower for k in ['full name', 'your name', 'name']):
+            p_name = ans_str.strip()
+        if age == 'N/A' and 'age' in q_lower:
+            age = ans_str.strip()
+        if gender == 'N/A' and 'gender' in q_lower:
+            gender = ans_str.strip()
 
         if any(w in q_lower for w in ['source', 'concern', 'worry', 'cause', 'stressor']):
             if len(ans_str) > 3 and ans_str.lower() not in likert_map:
@@ -160,6 +177,9 @@ def score_submission(submission, config):
         action_cards.append(card_html)
 
     return {
+        'participant_name': p_name or 'Participant',
+        'age': age,
+        'gender': gender,
         'scores': final_scores,
         'persona': assigned_persona,
         'stress_label': stress_label,
@@ -174,10 +194,13 @@ def score_submission(submission, config):
 
 def render_report(submission, scored, template_str):
     scores = scored['scores']
-    sub_id = submission.get('submission_id', 'user-01')
+    p_name = scored['participant_name']
+    age = scored['age']
+    gender = scored['gender']
+    sub_id = submission.get('submission_id') or slugify(p_name)
     ts = submission.get('timestamp', datetime.now(timezone.utc).strftime('%Y-%m-%d'))
     date_str = ts.split('T')[0] if 'T' in ts else ts
-    cohort = submission.get('cohort', 'Community Cohort 2026')
+    cohort = submission.get('cohort', 'CEP Cohort 2026')
     radar_stress_inv = max(5, 100 - scores['stress_anxiety'])
 
     def get_color(val):
@@ -187,6 +210,9 @@ def render_report(submission, scored, template_str):
         return '#ef4444'
 
     rendered = template_str
+    rendered = rendered.replace('{{participant_name}}', p_name)
+    rendered = rendered.replace('{{participant_age}}', str(age))
+    rendered = rendered.replace('{{participant_gender}}', str(gender))
     rendered = rendered.replace('{{participant_id}}', sub_id)
     rendered = rendered.replace('{{assessment_date}}', date_str)
     rendered = rendered.replace('{{cohort}}', cohort)
@@ -229,14 +255,21 @@ def render_index(all_evaluations, index_template_str):
     for item in all_evaluations:
         sub = item['submission']
         scored = item['scored']
-        sub_id = sub.get('submission_id', 'user-01')
+        p_name = scored['participant_name']
+        age = scored['age']
+        gender = scored['gender']
+        sub_id = sub.get('submission_id') or slugify(p_name)
         scores = scored['scores']
         badge_type = scored['badge_type']
         badge_text = scored['badge_text']
         persona_title = scored['persona']['title']
         persona_tagline = scored['persona']['tagline']
 
-        card = f'''<a href="reports/{sub_id}.html" class="report-preview-card"><div><div class="report-card-top"><span class="user-badge">{sub_id}</span><span class="status-badge" style="background: rgba(79, 70, 229, 0.1); color: var(--brand-primary);">{badge_text}</span></div><div class="report-card-title">{persona_title}</div><div class="report-card-tagline">{persona_tagline}</div></div><div class="report-metrics-row"><div class="report-metric-item">Stress: <strong>{scores["stress_anxiety"]}%</strong></div><div class="report-metric-item">Resilience: <strong>{scores["emotional_wellbeing"]}%</strong></div><div class="report-metric-item">Vitality: <strong>{scores["energy_vitality"]}%</strong></div></div></a>'''
+        demo_str = f'{gender}' if gender != 'N/A' else ''
+        if age != 'N/A':
+            demo_str += f', Age {age}' if demo_str else f'Age {age}'
+
+        card = f'''<a href="reports/{sub_id}.html" class="report-preview-card"><div><div class="report-card-top"><span class="user-badge">{p_name}</span><span class="status-badge" style="background: rgba(79, 70, 229, 0.1); color: var(--brand-primary);">{badge_text}</span></div><div class="report-card-title">{persona_title}</div><div class="report-card-tagline">{persona_tagline}</div>{f"<div style='font-size:0.75rem;color:var(--text-muted);margin-bottom:10px;'>{demo_str}</div>" if demo_str else ''}</div><div class="report-metrics-row"><div class="report-metric-item">Stress: <strong>{scores["stress_anxiety"]}%</strong></div><div class="report-metric-item">Resilience: <strong>{scores["emotional_wellbeing"]}%</strong></div><div class="report-metric-item">Vitality: <strong>{scores["energy_vitality"]}%</strong></div></div></a>'''
         cards_html.append(card)
 
     rendered = index_template_str
@@ -281,8 +314,9 @@ def main():
     if args.single_payload:
         try:
             new_sub = json.loads(args.single_payload)
-            if 'submission_id' not in new_sub:
-                new_sub['submission_id'] = f'user-{len(existing_responses)+1:02d}'
+            p_name = new_sub.get('participant_name', 'Participant')
+            if 'submission_id' not in new_sub or not new_sub['submission_id']:
+                new_sub['submission_id'] = slugify(p_name)
             replaced = False
             for idx, item in enumerate(existing_responses):
                 if item.get('submission_id') == new_sub['submission_id']:
@@ -291,43 +325,19 @@ def main():
                     break
             if not replaced:
                 existing_responses.append(new_sub)
-            print(f'Added new submission: {new_sub["submission_id"]}')
+            print(f'Added new submission: {new_sub["submission_id"]} ({p_name})')
         except Exception as e:
             print(f'Error parsing single payload: {e}')
 
-    if args.sheet_csv_url:
-        try:
-            print(f'Fetching responses from Google Sheet: {args.sheet_csv_url}')
-            req = urllib.request.Request(args.sheet_csv_url, headers={'User-Agent': 'Mozilla/5.0'})
-            with urllib.request.urlopen(req) as resp:
-                csv_content = resp.read().decode('utf-8')
-                reader = csv.DictReader(io.StringIO(csv_content))
-                for idx, row in enumerate(reader, 1):
-                    sub_id = f'user-{idx:02d}'
-                    ts = row.get('Timestamp', datetime.now(timezone.utc).strftime('%Y-%m-%d'))
-                    answers = {k: v for k, v in row.items() if k != 'Timestamp'}
-                    sub_obj = {
-                        'submission_id': sub_id,
-                        'timestamp': ts,
-                        'participant_name': f'Participant {idx:02d}',
-                        'cohort': 'CEP Cohort 2026',
-                        'answers': answers
-                    }
-                    replaced = False
-                    for i, it in enumerate(existing_responses):
-                        if it.get('submission_id') == sub_id:
-                            existing_responses[i] = sub_obj
-                            replaced = True
-                            break
-                    if not replaced:
-                        existing_responses.append(sub_obj)
-        except Exception as e:
-            print(f'Error reading Google Sheet CSV: {e}')
-
     all_evaluations = []
     for sub in existing_responses:
-        sub_id = sub.get('submission_id', 'user-01')
         scored = score_submission(sub, config)
+        sub_id = sub.get('submission_id') or slugify(scored['participant_name'])
+        sub['submission_id'] = sub_id
+        sub['participant_name'] = scored['participant_name']
+        sub['age'] = scored['age']
+        sub['gender'] = scored['gender']
+
         html_content = render_report(sub, scored, report_tpl)
 
         report_file = os.path.join(reports_out_dir, f'{sub_id}.html')
@@ -343,7 +353,7 @@ def main():
             'submission': sub,
             'scored': scored
         })
-        print(f'Generated report for {sub_id} -> {report_file}')
+        print(f'Generated report for {sub_id} ({scored["participant_name"]}) -> {report_file}')
 
     index_html = render_index(all_evaluations, index_tpl)
     index_file = os.path.join(base_dir, 'index.html')
