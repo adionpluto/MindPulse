@@ -469,9 +469,9 @@
         </div>
       </a>
       <div class="nav-actions">
-        <a href="../index.html" class="btn">?? All Reports</a>
-        <button onclick="window.print()" class="btn btn-primary">??? Print / Save PDF</button>
-        <button onclick="toggleTheme()" class="btn" id="themeToggleBtn">??</button>
+        <a href="../index.html" class="btn"> All Reports</a>
+        <button onclick="window.print()" class="btn btn-primary">? Print / Save PDF</button>
+        <button onclick="toggleTheme()" class="btn" id="themeToggleBtn"></button>
       </div>
     </div>
   </header>
@@ -515,7 +515,7 @@
       <div class="metric-card">
         <div class="metric-header">
           <span class="metric-title">Emotional Resilience</span>
-          <span class="metric-icon">??</span>
+          <span class="metric-icon"></span>
         </div>
         <div class="metric-value-row">
           <span class="metric-value">50</span>
@@ -530,7 +530,7 @@
       <div class="metric-card">
         <div class="metric-header">
           <span class="metric-title">Vitality & Focus</span>
-          <span class="metric-icon">??</span>
+          <span class="metric-icon"></span>
         </div>
         <div class="metric-value-row">
           <span class="metric-value">25</span>
@@ -545,7 +545,7 @@
       <div class="metric-card">
         <div class="metric-header">
           <span class="metric-title">Coping Adaptability</span>
-          <span class="metric-icon">??</span>
+          <span class="metric-icon"></span>
         </div>
         <div class="metric-value-row">
           <span class="metric-value">50</span>
@@ -585,7 +585,7 @@
           </div>
         </div>
         <div style="margin-top: 20px; font-size: 0.85rem; color: var(--text-muted);">
-          ?? <em>Cognitive strain is noticeably elevated. Prioritize active de-escalation and micro-rest intervals.</em>
+           <em>Cognitive strain is noticeably elevated. Prioritize active de-escalation and micro-rest intervals.</em>
         </div>
       </div>
     </div>
@@ -606,7 +606,7 @@
     </div>
 
     <!-- Tailored 3-Phase Action Plan -->
-    <h2 class="section-title">?? Personalized Self-Improvement Roadmap</h2>
+    <h2 class="section-title"> Personalized Self-Improvement Roadmap</h2>
     <div class="plan-grid">
       <div class="plan-card"><div class="plan-phase">Phase 1: Immediate Relief (Day 1)</div><h3 class="plan-heading">Physiological Sigh & 4-7-8 Breathwork</h3><p class="plan-body">Perform 3 minutes of double-inhalation followed by extended exhalation to down-regulate acute sympathetic nervous arousal.</p></div>
 <div class="plan-card"><div class="plan-phase">Phase 2: Short-Term Habit (Week 1)</div><h3 class="plan-heading">90-Minute Ultradian Rhythm Cycles</h3><p class="plan-body">Work in 90-minute focused blocks followed by mandatory 10-minute active non-screen restoration (stretching, pacing, breathing).</p></div>
@@ -616,7 +616,7 @@
     <!-- Crisis Support Helplines -->
     <div class="crisis-card">
       <div class="crisis-header">
-        <span>???</span>
+        <span>?</span>
         <span>24/7 Welfare & Confidential Crisis Support</span>
       </div>
       <p class="crisis-text">
@@ -646,12 +646,12 @@
       if (html.classList.contains('dark')) {
         html.classList.remove('dark');
         html.classList.add('light');
-        btn.innerText = '??';
+        btn.innerText = '';
         localStorage.setItem('theme', 'light');
       } else {
         html.classList.remove('light');
         html.classList.add('dark');
-        btn.innerText = '??';
+        btn.innerText = '';
         localStorage.setItem('theme', 'dark');
       }
       updateChartTheme();
@@ -660,7 +660,7 @@
     if (localStorage.getItem('theme') === 'dark' || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
       const btn = document.getElementById('themeToggleBtn');
-      if (btn) btn.innerText = '??';
+      if (btn) btn.innerText = '';
     }
 
     let radarChartInstance = null;

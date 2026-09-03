@@ -6,7 +6,7 @@
   <title>MindPulse | Psychological Welfare Assessment Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-primary: #f8fafc;
@@ -359,8 +359,8 @@
         </div>
       </a>
       <div class="nav-actions">
-        <a href="{{google_form_url}}" target="_blank" rel="noopener" class="btn btn-primary">?? Submit Evaluation Form</a>
-        <button onclick="toggleTheme()" class="btn" id="themeToggleBtn">??</button>
+        <a href="{{google_form_url}}" target="_blank" rel="noopener" class="btn btn-primary">Submit Evaluation Form</a>
+        <button onclick="toggleTheme()" class="btn" id="themeToggleBtn"></button>
       </div>
     </div>
   </header>
@@ -369,17 +369,17 @@
 
     <!-- Hero Section -->
     <section class="hero-section">
-      <span class="hero-tag">? Community Engagement Project (CEP)</span>
+      <span class="hero-tag">Community Engagement Project (CEP)</span>
       <h1 class="hero-heading">Personalized Psychological Welfare & Emotional Insights</h1>
       <p class="hero-desc">
         MindPulse transforms self-reported psychological survey responses into objective wellness metrics, identifying behavioral patterns, stress drivers, and personalized self-improvement roadmaps.
       </p>
       <div class="hero-cta-group">
         <a href="{{google_form_url}}" target="_blank" rel="noopener" class="btn btn-primary" style="padding: 12px 28px; font-size: 1rem;">
-          ?? Fill the Google Form Assessment
+          Fill the Google Form Assessment
         </a>
         <a href="#reportsSection" class="btn" style="padding: 12px 24px; font-size: 1rem;">
-          ?? View Assessment Reports
+          View Assessment Reports
         </a>
       </div>
     </section>
@@ -408,11 +408,11 @@
     <section id="reportsSection">
       <div class="section-header">
         <div>
-          <h2 class="section-title">?? Participant Welfare Reports</h2>
+          <h2 class="section-title">Participant Welfare Reports</h2>
           <p style="font-size: 0.85rem; color: var(--text-muted);">Instant, individualized static web reports hosted securely on GitHub Pages.</p>
         </div>
         <div class="search-box">
-          <span class="search-icon">??</span>
+          <span class="search-icon"></span>
           <input type="text" id="searchInput" class="search-input" placeholder="Search by ID (e.g. user-01)..." onkeyup="filterReports()">
         </div>
       </div>
@@ -424,20 +424,20 @@
 
     <!-- Project Methodology & Ethics -->
     <section style="margin-top: 60px;">
-      <h2 class="section-title">?? How MindPulse Works</h2>
+      <h2 class="section-title">How MindPulse Works</h2>
       <div class="about-grid">
         <div class="about-card">
-          <div class="about-icon">??</div>
+          <div class="about-icon"></div>
           <h3>1. Data Collection</h3>
           <p>Participants anonymously answer questions regarding stress, mood, sleep, focus, and coping strategies via Google Forms.</p>
         </div>
         <div class="about-card">
-          <div class="about-icon">??</div>
+          <div class="about-icon"></div>
           <h3>2. Welfare Evaluation</h3>
           <p>The automated assessment engine computes 5 psychological dimensions, maps behavioural personas, and detects acute stress risks.</p>
         </div>
         <div class="about-card">
-          <div class="about-icon">??</div>
+          <div class="about-icon"></div>
           <h3>3. Automated Publishing</h3>
           <p>Each response automatically builds a tailored HTML report with Chart.js analytics and deploys live to GitHub Pages via GitHub Actions.</p>
         </div>
@@ -459,12 +459,12 @@
       if (html.classList.contains('dark')) {
         html.classList.remove('dark');
         html.classList.add('light');
-        btn.innerText = '??';
+        btn.innerText = '';
         localStorage.setItem('theme', 'light');
       } else {
         html.classList.remove('light');
         html.classList.add('dark');
-        btn.innerText = '??';
+        btn.innerText = '';
         localStorage.setItem('theme', 'dark');
       }
     }
@@ -472,7 +472,7 @@
     if (localStorage.getItem('theme') === 'dark' || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
       const btn = document.getElementById('themeToggleBtn');
-      if (btn) btn.innerText = '??';
+      if (btn) btn.innerText = '';
     }
 
     function filterReports() {
