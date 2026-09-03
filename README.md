@@ -1,4 +1,4 @@
-# ?? MindPulse (Psyche-Reports)
+# MindPulse (Psyche-Reports)
 ### Psychological Welfare Assessment Platform | Community Engagement Project (CEP)
 
 [![GitHub Pages](https://img.shields.io/badge/Hosted%20On-GitHub%20Pages-blue?style=flat&logo=github)](https://pages.github.com/)
@@ -9,13 +9,13 @@
 
 ---
 
-## ?? Project Links
+## Project Links
 - **Google Form (Assessment Survey)**: [Take the Psychological Evaluation](https://docs.google.com/forms/d/e/1FAIpQLSeHTq7AJaWnuY1S7jnSrSzAU9U6klFItG0h-KqO-3gWt44p7g/viewform)
 - **Edit Form Link**: [Form Editor](https://docs.google.com/forms/d/1nnzr6fL0V3Wv13q-yuWzAnY29lC-CdW4HG6VnvHo35k/edit)
 
 ---
 
-## ? How The Automation Works
+## How The Automation Works
 
 ```mermaid
 flowchart LR
@@ -43,7 +43,7 @@ flowchart LR
 
 ---
 
-## ?? Repository Structure
+## Repository Structure
 
 ```
 psyche-reports/
@@ -71,7 +71,7 @@ psyche-reports/
 
 ---
 
-## ?? Step-by-Step Setup Guide
+## Step-by-Step Setup Guide
 
 ### 1. Push Repository to GitHub
 1. Create a new repository on GitHub named `psyche-reports`.
@@ -86,14 +86,14 @@ psyche-reports/
    ```
 
 ### 2. Enable GitHub Pages
-1. On GitHub, go to your repository **Settings** ? **Pages**.
+1. On GitHub, go to your repository **Settings** **Pages**.
 2. Under **Build and deployment** ? **Source**, select **Deploy from a branch**.
 3. Choose branch `main` and folder `/ (root)`.
 4. Click **Save**. Your website will be live at: `https://<YOUR_USERNAME>.github.io/psyche-reports/`
 
 ### 3. Generate a GitHub Personal Access Token (PAT)
 Google Apps Script needs permission to trigger GitHub Actions:
-1. Go to your GitHub **Settings** ? **Developer settings** ? **Personal access tokens** ? **Tokens (classic)**.
+1. Go to your GitHub **Settings** **Developer settings** **Personal access tokens** **Tokens (classic)**.
 2. Click **Generate new token (classic)**.
 3. Name it `MindPulse-GAS-Trigger` and check the **`repo`** scope (or `workflow`).
 4. Click **Generate token** and copy the token string (`ghp_...`).
@@ -123,7 +123,7 @@ Google Apps Script needs permission to trigger GitHub Actions:
 
 ---
 
-## ?? Local Testing & Manual Rebuilds
+## Local Testing & Manual Rebuilds
 
 To test or generate reports locally on your machine:
 ```bash
@@ -136,7 +136,7 @@ python automation/process_responses.py --single-payload '{"submission_id":"user-
 
 ---
 
-## ?? Psychological Assessment Methodology & Dimensions
+## Psychological Assessment Methodology & Dimensions
 
 The evaluation engine maps answers to 5 core psychological dimensions:
 
@@ -150,7 +150,7 @@ The evaluation engine maps answers to 5 core psychological dimensions:
 
 ---
 
-## ??? Privacy, Anonymity & Ethical Welfare Notice
+## Privacy, Anonymity & Ethical Welfare Notice
 
 - **Anonymity**: Participant identities are anonymized with unique pseudonymous tokens (`user-01`, `user-02`, etc.) to protect individual privacy.
 - **Educational Scope**: MindPulse is designed for Community Engagement Projects (CEP), personal self-reflection, and wellness promotion. It does not provide clinical diagnoses.
@@ -158,5 +158,5 @@ The evaluation engine maps answers to 5 core psychological dimensions:
 
 ---
 
-## ?? License
+## License
 This project is open-source and available under the [MIT License](LICENSE).
