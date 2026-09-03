@@ -48,26 +48,26 @@ flowchart LR
 
 ```text
 psyche-reports/
-??? .github/
-?   ??? workflows/
-?       ??? generate-reports.yml       # GitHub Actions automated workflow
-??? automation/
-?   ??? google_apps_script.js          # Google Apps Script trigger (copy to Form/Sheet)
-?   ??? sample_responses.json          # Test fixture responses with demographics
-?   ??? process_responses.py           # Core psychological evaluation & HTML engine
-??? data/
-?   ??? responses.json                 # Persistent responses database (JSON)
-?   ??? scoring_config.json            # Configurable assessment rubric & scoring rules
-??? templates/
-?   ??? report_template.html           # Participant report template with Chart.js
-?   ??? index_template.html            # Main project portal & cohort stats
-??? reports/                           # Output directory for individual reports
-?   ??? aditya-choubey.html
-?   ??? sarah-jenkins.html
-?   ??? marcus-vance.html
-?   ??? elena-rostova.html
-??? index.html                         # Live landing page & CEP aggregate overview
-??? README.md                          # Project documentation
+.github/
+workflows/
+generate-reports.yml           # GitHub Actions automated workflow
+automation/
+google_apps_script.js          # Google Apps Script trigger (copy to Form/Sheet)
+sample_responses.json          # Test fixture responses with demographics
+process_responses.py           # Core psychological evaluation & HTML engine
+data/
+responses.json                 # Persistent responses database (JSON)
+scoring_config.json            # Configurable assessment rubric & scoring rules
+templates/
+report_template.html           # Participant report template with Chart.js
+index_template.html            # Main project portal & cohort stats
+reports/                       # Output directory for individual reports
+aditya-choubey.html
+sarah-jenkins.html
+marcus-vance.html
+elena-rostova.html
+index.html                     # Live landing page & CEP aggregate overview
+README.md                      # Project documentation
 ```
 
 ---
