@@ -1,4 +1,4 @@
-# MindPulse (Psyche-Reports)
+# MindPulse 
 ### Psychological Welfare Assessment Platform | Community Engagement Project (CEP)
 
 [![GitHub Pages](https://img.shields.io/badge/Hosted%20On-GitHub%20Pages-blue?style=flat&logo=github)](https://pages.github.com/)
