@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MindPulse Report | {{participant_name}}</title>
-  <!-- Google Fonts & Chart.js -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -59,7 +58,6 @@
       padding: 24px 20px;
     }
 
-    /* Top Navigation Header */
     header {
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
@@ -139,7 +137,6 @@
       background: var(--brand-secondary);
     }
 
-    /* Hero Banner */
     .report-hero {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -202,11 +199,11 @@
       line-height: 1.7;
     }
 
-    /* Metric Cards Grid */
+    /* 5 Core Metric Cards Grid */
     .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
       margin-top: 24px;
     }
     .metric-card {
@@ -228,17 +225,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .metric-title {
-      font-size: 0.82rem;
-      font-weight: 600;
+      font-size: 0.8rem;
+      font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-    }
-    .metric-icon {
-      font-size: 1.25rem;
     }
     .metric-value-row {
       display: flex;
@@ -247,11 +241,11 @@
       margin-bottom: 10px;
     }
     .metric-value {
-      font-size: 1.9rem;
+      font-size: 1.85rem;
       font-weight: 800;
     }
     .metric-unit {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
       font-weight: 600;
     }
@@ -268,7 +262,6 @@
       transition: width 1s ease-in-out;
     }
 
-    /* Visualization Section */
     .viz-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -296,7 +289,6 @@
       font-weight: 700;
     }
 
-    /* Gauge Meter */
     .gauge-wrapper {
       padding: 10px 0;
     }
@@ -325,7 +317,54 @@
       font-weight: 600;
     }
 
-    /* Action Plan Cards */
+    /* 12 Indicators Breakdown Grid */
+    .indicators-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 24px;
+      margin-top: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .indicators-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .indicator-item {
+      padding: 16px;
+      background: var(--bg-primary);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .indicator-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 10px;
+    }
+    .indicator-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .indicator-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .indicator-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
     .section-title {
       font-size: 1.35rem;
       font-weight: 800;
@@ -367,43 +406,6 @@
       line-height: 1.6;
     }
 
-    /* Driver & Qualitative Insights */
-    .insights-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 18px;
-      padding: 24px;
-      margin-top: 24px;
-      box-shadow: var(--shadow-sm);
-    }
-    .insights-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-top: 14px;
-    }
-    @media (max-width: 680px) {
-      .insights-grid { grid-template-columns: 1fr; }
-    }
-    .insight-item {
-      padding: 16px;
-      background: var(--bg-primary);
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-    }
-    .insight-label {
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-    .insight-text {
-      font-size: 0.92rem;
-      font-weight: 500;
-    }
-
-    /* Crisis Helplines */
     .crisis-card {
       margin-top: 36px;
       border: 1px solid rgba(239, 68, 68, 0.3);
@@ -443,12 +445,11 @@
       align-items: center;
     }
 
-    /* Print Rules */
     @media print {
       header, .nav-actions, .theme-btn { display: none !important; }
       body { background: white !important; color: black !important; padding: 0 !important; }
       .container { max-width: 100% !important; padding: 0 !important; }
-      .report-hero, .metric-card, .viz-card, .plan-card, .insights-card, .crisis-card {
+      .report-hero, .metric-card, .viz-card, .plan-card, .indicators-card, .crisis-card {
         box-shadow: none !important;
         border: 1px solid #ccc !important;
         page-break-inside: avoid;
@@ -458,7 +459,6 @@
 </head>
 <body>
 
-  <!-- Header -->
   <header>
     <div class="header-inner">
       <a href="../index.html" class="logo-group">
@@ -469,16 +469,15 @@
         </div>
       </a>
       <div class="nav-actions">
-        <a href="../index.html" class="btn"> All Reports</a>
-        <button onclick="window.print()" class="btn btn-primary">? Print / Save PDF</button>
-        <button onclick="toggleTheme()" class="btn" id="themeToggleBtn"></button>
+        <a href="../index.html" class="btn">All Reports</a>
+        <button onclick="window.print()" class="btn btn-primary">Print / Save PDF</button>
+        <button onclick="toggleTheme()" class="btn" id="themeToggleBtn">Theme</button>
       </div>
     </div>
   </header>
 
   <div class="container">
 
-    <!-- Hero Assessment Banner -->
     <div class="report-hero">
       <div class="hero-glow"></div>
       <div class="badge-bar">
@@ -496,13 +495,11 @@
       </div>
     </div>
 
-    <!-- 4 Core Metrics Grid -->
+    <!-- 5 Core Metrics Grid -->
     <div class="metrics-grid">
-      <!-- Metric 1: Stress & Overwhelm -->
       <div class="metric-card">
         <div class="metric-header">
-          <span class="metric-title">Stress & Overwhelm</span>
-          <span class="metric-icon">?</span>
+          <span class="metric-title">Stress & Load</span>
         </div>
         <div class="metric-value-row">
           <span class="metric-value">{{score_stress}}</span>
@@ -513,11 +510,9 @@
         </div>
       </div>
 
-      <!-- Metric 2: Emotional Resilience -->
       <div class="metric-card">
         <div class="metric-header">
-          <span class="metric-title">Emotional Resilience</span>
-          <span class="metric-icon"></span>
+          <span class="metric-title">Happiness & Mood</span>
         </div>
         <div class="metric-value-row">
           <span class="metric-value">{{score_emotional}}</span>
@@ -528,11 +523,9 @@
         </div>
       </div>
 
-      <!-- Metric 3: Vitality & Focus -->
       <div class="metric-card">
         <div class="metric-header">
-          <span class="metric-title">Vitality & Focus</span>
-          <span class="metric-icon"></span>
+          <span class="metric-title">Sleep & Vitality</span>
         </div>
         <div class="metric-value-row">
           <span class="metric-value">{{score_energy}}</span>
@@ -543,11 +536,9 @@
         </div>
       </div>
 
-      <!-- Metric 4: Coping Adaptability -->
       <div class="metric-card">
         <div class="metric-header">
-          <span class="metric-title">Coping Adaptability</span>
-          <span class="metric-icon"></span>
+          <span class="metric-title">Personal Self-Care</span>
         </div>
         <div class="metric-value-row">
           <span class="metric-value">{{score_coping}}</span>
@@ -557,9 +548,22 @@
           <div class="progress-fill" style="width: {{score_coping}}%; background-color: {{color_coping}};"></div>
         </div>
       </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-title">Social Belonging</span>
+        </div>
+        <div class="metric-value-row">
+          <span class="metric-value">{{score_social}}</span>
+          <span class="metric-unit">/ 100</span>
+        </div>
+        <div class="metric-progress">
+          <div class="progress-fill" style="width: {{score_social}}%; background-color: {{color_social}};"></div>
+        </div>
+      </div>
     </div>
 
-    <!-- Visualizations: Radar Chart & Stress Gauge -->
+    <!-- Visualizations: Radar & Gauge -->
     <div class="viz-grid">
       <div class="viz-card">
         <div class="viz-card-header">
@@ -587,36 +591,31 @@
           </div>
         </div>
         <div style="margin-top: 20px; font-size: 0.85rem; color: var(--text-muted);">
-           <em>{{stress_advice_snippet}}</em>
+          <em>Tip: {{stress_advice_snippet}}</em>
         </div>
       </div>
     </div>
 
-    <!-- Qualitative Insights -->
-    <div class="insights-card">
-      <h3 style="font-size: 1.1rem; font-weight: 700;">Identified Drivers & Response Tendencies</h3>
-      <div class="insights-grid">
-        <div class="insight-item">
-          <div class="insight-label">Primary Reported Stressors</div>
-          <div class="insight-text">{{reported_stressors}}</div>
-        </div>
-        <div class="insight-item">
-          <div class="insight-label">Active Peace & Restoration Anchors</div>
-          <div class="insight-text">{{reported_coping_anchors}}</div>
-        </div>
+    <!-- 12 MCQ Indicators Detailed Breakdown -->
+    <div class="indicators-card">
+      <h3 style="font-size: 1.15rem; font-weight: 700;">12 Core Welfare Indicators Breakdown</h3>
+      <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">
+        Evaluated directly from your responses across rest, self-care, daily happiness, pressure, and connection.
+      </p>
+      <div class="indicators-grid">
+        {{indicators_breakdown_html}}
       </div>
     </div>
 
-    <!-- Tailored 3-Phase Action Plan -->
-    <h2 class="section-title"> Personalized Self-Improvement Roadmap</h2>
+    <!-- Action Plan -->
+    <h2 class="section-title">Personalized Self-Improvement Roadmap</h2>
     <div class="plan-grid">
       {{action_plan_cards}}
     </div>
 
-    <!-- Crisis Support Helplines -->
+    <!-- Helplines -->
     <div class="crisis-card">
       <div class="crisis-header">
-        <span>?</span>
         <span>24/7 Welfare & Confidential Crisis Support</span>
       </div>
       <p class="crisis-text">
@@ -631,7 +630,6 @@
       </div>
     </div>
 
-    <!-- Footer -->
     <footer style="margin-top: 40px; text-align: center; font-size: 0.78rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 20px;">
       <p>MindPulse Psyche-Reports | Community Engagement Project (CEP) Psychological Welfare Assessment</p>
       <p style="margin-top: 4px;">Data collected strictly for participant personal development. Not a medical diagnostic device.</p>
@@ -646,12 +644,12 @@
       if (html.classList.contains('dark')) {
         html.classList.remove('dark');
         html.classList.add('light');
-        btn.innerText = '';
+        btn.innerText = 'Dark Mode';
         localStorage.setItem('theme', 'light');
       } else {
         html.classList.remove('light');
         html.classList.add('dark');
-        btn.innerText = '';
+        btn.innerText = 'Light Mode';
         localStorage.setItem('theme', 'dark');
       }
       updateChartTheme();
@@ -660,7 +658,10 @@
     if (localStorage.getItem('theme') === 'dark' || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
       const btn = document.getElementById('themeToggleBtn');
-      if (btn) btn.innerText = '';
+      if (btn) btn.innerText = 'Light Mode';
+    } else {
+      const btn = document.getElementById('themeToggleBtn');
+      if (btn) btn.innerText = 'Dark Mode';
     }
 
     let radarChartInstance = null;
@@ -673,7 +674,7 @@
       radarChartInstance = new Chart(ctx, {
         type: 'radar',
         data: {
-          labels: ['Stress Balance', 'Emotional Resilience', 'Vitality & Focus', 'Coping Strategy', 'Social Support'],
+          labels: ['Stress Balance', 'Happiness & Mood', 'Sleep & Rest', 'Self-Care Time', 'Social Support'],
           datasets: [
             {
               label: 'Your Assessment',
@@ -688,7 +689,7 @@
             },
             {
               label: 'CEP Cohort Benchmark',
-              data: [55, 65, 60, 55, 58],
+              data: [60, 70, 65, 60, 65],
               backgroundColor: 'rgba(6, 182, 212, 0.10)',
               borderColor: '#06b6d4',
               borderDash: [4, 4],

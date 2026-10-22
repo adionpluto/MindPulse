@@ -8,7 +8,7 @@ import urllib.request
 import csv
 import io
 
-GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeHTq7AJaWnuY1S7jnSrSzAU9U6klFItG0h-KqO-3gWt44p7g/viewform"
+GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeHTq7AJaWnuY1S7jnSzAU9U6klFItG0h-KqO-3gWt44p7g/viewform"
 
 def load_json(filepath):
     if os.path.exists(filepath):
@@ -26,84 +26,188 @@ def slugify(text):
     slug = re.sub(r'[-\s]+', '-', text)
     return slug if slug else 'participant'
 
-def parse_likert(val, likert_map):
+def parse_likert_val(val):
     if isinstance(val, (int, float)):
-        return max(1, min(5, float(val)))
-    if not isinstance(val, str):
-        return 3.0
-    val_clean = val.strip().lower()
-    for k, v in likert_map.items():
-        if k in val_clean:
-            return float(v)
+        return max(1.0, min(5.0, float(val)))
+    val_clean = str(val).strip().lower()
     match = re.search(r'\b([1-5])\b', val_clean)
     if match:
         return float(match.group(1))
+    if any(k in val_clean for k in ["highly likely", "almost always", "always", "strongly agree", "excellent"]):
+        return 5.0
+    if any(k in val_clean for k in ["likely", "often", "agree", "good"]):
+        return 4.0
+    if any(k in val_clean for k in ["moderate", "sometimes", "neutral", "fair"]):
+        return 3.0
+    if any(k in val_clean for k in ["unlikely", "rarely", "disagree"]):
+        return 2.0
+    if any(k in val_clean for k in ["highly unlikely", "never", "almost never", "strongly disagree", "poor"]):
+        return 1.0
     return 3.0
 
+INDICATOR_SPECS = [
+    {
+        "key": "sleep_quality",
+        "title": "Restorative Sleep & Energy",
+        "desc": "Ability to wake up feeling rested and refreshed",
+        "keywords": ["sleep", "rested", "energized", "refreshed"],
+        "dimension": "sleep_vitality",
+        "is_stress": False
+    },
+    {
+        "key": "self_care_time",
+        "title": "Daily Personal Self-Care Time",
+        "desc": "Taking dedicated personal time each day to unwind",
+        "keywords": ["personal time", "for yourself", "unwind", "relax"],
+        "dimension": "self_care",
+        "is_stress": False
+    },
+    {
+        "key": "happiness",
+        "title": "Daily Happiness & Contentment",
+        "desc": "Baseline positive emotional state in daily routine",
+        "keywords": ["happy", "content", "positive in your"],
+        "dimension": "emotional_wellbeing",
+        "is_stress": False
+    },
+    {
+        "key": "overwhelm",
+        "title": "Workload Overwhelm & Pressure",
+        "desc": "Feeling weighed down by responsibilities",
+        "keywords": ["overwhelmed", "weighed down", "responsibilities", "deadlines"],
+        "dimension": "stress_overwhelm",
+        "is_stress": True
+    },
+    {
+        "key": "physical_tension",
+        "title": "Physical Tension & Nervousness",
+        "desc": "Experiencing bodily tension or racing thoughts",
+        "keywords": ["tension", "nervousness", "racing thoughts"],
+        "dimension": "stress_overwhelm",
+        "is_stress": True
+    },
+    {
+        "key": "calmness",
+        "title": "Composure Under Setbacks",
+        "desc": "Staying calm and grounded when unexpected issues arise",
+        "keywords": ["calm", "setbacks", "challenges", "grounded"],
+        "dimension": "emotional_wellbeing",
+        "is_stress": False
+    },
+    {
+        "key": "focus",
+        "title": "Mental Clarity & Concentration",
+        "desc": "Maintaining motivation and sharp task focus",
+        "keywords": ["clarity", "concentration", "focus", "mental exhaustion"],
+        "dimension": "sleep_vitality",
+        "is_stress": False
+    },
+    {
+        "key": "coping_habits",
+        "title": "Healthy Decompression Habits",
+        "desc": "Using exercise, hobbies, walks, or mindfulness to decompress",
+        "keywords": ["coping habits", "coping strategies", "exercise", "walks", "hobbies"],
+        "dimension": "self_care",
+        "is_stress": False
+    },
+    {
+        "key": "support_seeking",
+        "title": "Reaching Out for Support",
+        "desc": "Willingness to seek guidance when facing struggles",
+        "keywords": ["reach out", "friends, family", "comfort or guidance"],
+        "dimension": "social_connection",
+        "is_stress": False
+    },
+    {
+        "key": "belonging",
+        "title": "Community Connection & Belonging",
+        "desc": "Feeling valued, respected, and socially connected",
+        "keywords": ["valued", "respected", "socially connected", "belonging", "community"],
+        "dimension": "social_connection",
+        "is_stress": False
+    },
+    {
+        "key": "overthinking",
+        "title": "Repetitive Overthinking & Worry",
+        "desc": "Getting trapped in future worry and mental loops",
+        "keywords": ["overthinking", "worry", "doubt", "future outcomes"],
+        "dimension": "stress_overwhelm",
+        "is_stress": True
+    },
+    {
+        "key": "optimism",
+        "title": "Future Optimism & Personal Growth",
+        "desc": "Feeling confident, hopeful, and motivated about future goals",
+        "keywords": ["optimistic", "future", "goals", "hopeful", "growth"],
+        "dimension": "emotional_wellbeing",
+        "is_stress": False
+    }
+]
+
 def score_submission(submission, config):
-    likert_map = config.get('likert_map', {})
-    keywords = config.get('question_keywords', {})
     answers = submission.get('answers', {})
 
-    dim_scores = {
-        'stress_anxiety': [],
-        'emotional_wellbeing': [],
-        'energy_vitality': [],
-        'coping_adaptability': [],
-        'social_connectivity': []
-    }
-
-    open_stressors = []
-    open_anchors = []
-
-    # Extract demographics if in answers
+    # Extract demographics
     p_name = submission.get('participant_name')
     age = submission.get('age', 'N/A')
     gender = submission.get('gender', 'N/A')
 
     for q_text, ans_val in answers.items():
         q_lower = q_text.lower()
-        ans_str = str(ans_val)
+        ans_str = str(ans_val).strip()
+        if (not p_name or p_name == 'Participant') and any(k in q_lower for k in ['full name', 'your name', 'name']):
+            p_name = ans_str
+        if (age == 'N/A' or not age) and 'age' in q_lower:
+            age = ans_str
+        if (gender == 'N/A' or not gender) and 'gender' in q_lower:
+            gender = ans_str
 
-        if not p_name and any(k in q_lower for k in ['full name', 'your name', 'name']):
-            p_name = ans_str.strip()
-        if age == 'N/A' and 'age' in q_lower:
-            age = ans_str.strip()
-        if gender == 'N/A' and 'gender' in q_lower:
-            gender = ans_str.strip()
-
-        if any(w in q_lower for w in ['source', 'concern', 'worry', 'cause', 'stressor']):
-            if len(ans_str) > 3 and ans_str.lower() not in likert_map:
-                open_stressors.append(ans_str)
-        if any(w in q_lower for w in ['peace', 'calm', 'relax', 'activity', 'habit', 'hobby']):
-            if len(ans_str) > 3 and ans_str.lower() not in likert_map:
-                open_anchors.append(ans_str)
-
-        matched_dim = None
-        for dim, kw_list in keywords.items():
-            if any(kw in q_lower for kw in kw_list):
-                matched_dim = dim
+    # Score each of the 12 indicators
+    matched_values = {}
+    for spec in INDICATOR_SPECS:
+        found_val = None
+        for q_text, ans_val in answers.items():
+            q_lower = q_text.lower()
+            if any(kw in q_lower for kw in spec['keywords']):
+                found_val = parse_likert_val(ans_val)
                 break
+        matched_values[spec['key']] = found_val if found_val is not None else 3.0
 
-        score_val = parse_likert(ans_str, likert_map)
-        if matched_dim:
-            dim_scores[matched_dim].append(score_val)
+    # Dimension scores
+    # Stress: Overwhelm, Physical Tension, Overthinking
+    stress_raw = (matched_values['overwhelm'] + matched_values['physical_tension'] + matched_values['overthinking']) / 3.0
+    stress_pct = round(((stress_raw - 1.0) / 4.0) * 100)
+    stress_pct = max(5, min(95, stress_pct))
 
-    final_scores = {}
-    for dim in ['stress_anxiety', 'emotional_wellbeing', 'energy_vitality', 'coping_adaptability', 'social_connectivity']:
-        scores = dim_scores[dim]
-        if scores:
-            avg_raw = sum(scores) / len(scores)
-            pct = round(((avg_raw - 1.0) / 4.0) * 100)
-        else:
-            pct = 50
-        final_scores[dim] = max(5, min(100, pct))
+    # Emotional Wellbeing: Happiness, Calmness under setbacks, Optimism
+    wb_raw = (matched_values['happiness'] + matched_values['calmness'] + matched_values['optimism']) / 3.0
+    wb_pct = round(((wb_raw - 1.0) / 4.0) * 100)
+    wb_pct = max(5, min(95, wb_pct))
 
-    stress = final_scores['stress_anxiety']
-    emotional = final_scores['emotional_wellbeing']
-    energy = final_scores['energy_vitality']
-    coping = final_scores['coping_adaptability']
+    # Sleep & Vitality: Sleep, Mental Focus
+    sleep_raw = (matched_values['sleep_quality'] + matched_values['focus']) / 2.0
+    sleep_pct = round(((sleep_raw - 1.0) / 4.0) * 100)
+    sleep_pct = max(5, min(95, sleep_pct))
 
+    # Personal Time & Self Care: Self-Care time, Coping habits
+    sc_raw = (matched_values['self_care_time'] + matched_values['coping_habits']) / 2.0
+    sc_pct = round(((sc_raw - 1.0) / 4.0) * 100)
+    sc_pct = max(5, min(95, sc_pct))
+
+    # Social Connection: Reaching out, Belonging
+    soc_raw = (matched_values['support_seeking'] + matched_values['belonging']) / 2.0
+    soc_pct = round(((soc_raw - 1.0) / 4.0) * 100)
+    soc_pct = max(5, min(95, soc_pct))
+
+    final_scores = {
+        "stress_overwhelm": stress_pct,
+        "emotional_wellbeing": wb_pct,
+        "sleep_vitality": sleep_pct,
+        "self_care": sc_pct,
+        "social_connection": soc_pct
+    }
+
+    # Evaluate Persona
     assigned_persona = None
     personas = config.get('personas', [])
     for p in personas:
@@ -113,7 +217,13 @@ def score_submission(submission, config):
                 assigned_persona = p
             continue
         try:
-            if eval(cond, {}, {'stress': stress, 'emotional': emotional, 'energy': energy, 'coping': coping}):
+            if eval(cond, {}, {
+                "stress": stress_pct,
+                "wellbeing": wb_pct,
+                "sleep": sleep_pct,
+                "self_care": sc_pct,
+                "social": soc_pct
+            }):
                 assigned_persona = p
                 break
         except Exception:
@@ -121,75 +231,133 @@ def score_submission(submission, config):
 
     if not assigned_persona:
         assigned_persona = personas[-1] if personas else {
-            'title': 'The Balanced Harmonizer',
-            'tagline': 'Steady Emotional Baseline',
-            'summary': 'Maintaining a steady psychological baseline with opportunities for routine enhancement.'
+            "title": "The Steady Harmonizer",
+            "tagline": "Manageable Baselines with Growth Opportunities",
+            "summary": "Maintaining a steady psychological baseline with opportunities for routine enhancement."
         }
 
-    if stress <= 30:
-        stress_label = 'Optimal / Low Tension'
-        badge_type = 'success'
-        badge_text = 'Thriving / Low Stress'
-        stress_color = '#10b981'
-        stress_advice = 'Your current stress baseline is exceptionally healthy. Focus on maintaining your restorative recovery rituals.'
-    elif stress <= 50:
-        stress_label = 'Moderate / Balanced'
-        badge_type = 'primary'
-        badge_text = 'Balanced / Manageable'
-        stress_color = '#3b82f6'
-        stress_advice = 'Stress levels are currently balanced and within healthy adaptive thresholds for daily productivity.'
-    elif stress <= 70:
-        stress_label = 'Elevated / Strained'
-        badge_type = 'warning'
-        badge_text = 'Elevated Strain'
-        stress_color = '#f59e0b'
-        stress_advice = 'Cognitive strain is noticeably elevated. Prioritize active de-escalation and micro-rest intervals.'
+    # Stress load classification
+    if stress_pct <= 30:
+        stress_label = "Optimal / Low Load"
+        badge_type = "success"
+        badge_text = "Thriving / Optimal"
+        stress_color = "#10b981"
+        stress_advice = "Your stress baseline is exceptionally low and balanced. Continue prioritizing your restorative sleep and unwind routines."
+    elif stress_pct <= 50:
+        stress_label = "Manageable / Balanced"
+        badge_type = "primary"
+        badge_text = "Balanced / Steady"
+        stress_color = "#3b82f6"
+        stress_advice = "Nervous system load is balanced and within healthy adaptive thresholds for daily academic productivity."
+    elif stress_pct <= 70:
+        stress_label = "Elevated Strain"
+        badge_type = "warning"
+        badge_text = "Elevated Tension"
+        stress_color = "#f59e0b"
+        stress_advice = "Cognitive strain and thought loops are noticeably elevated. Prioritize evening mental shutdowns and active decompression."
     else:
-        stress_label = 'Severe / Overwhelmed'
-        badge_type = 'danger'
-        badge_text = 'High Stress / Immediate Care'
-        stress_color = '#ef4444'
-        stress_advice = 'Nervous system load is high. Immediate physiological decompression and schedule decompression are strongly recommended.'
+        stress_label = "Severe Overload"
+        badge_type = "danger"
+        badge_text = "High Stress / Decompress"
+        stress_color = "#ef4444"
+        stress_advice = "Acute nervous system overload detected. Immediate physiological rest, task triage, and confiding in a mentor are strongly encouraged."
 
-    recs_pool = config.get('recommendations', {})
-    action_cards = []
+    # Generate 12 Indicator Breakdown HTML
+    indicators_html = []
+    scale_labels = {
+        1.0: ("Highly Unlikely", "danger"),
+        2.0: ("Unlikely", "warning"),
+        3.0: ("Moderate / Sometimes", "primary"),
+        4.0: ("Likely", "success"),
+        5.0: ("Highly Likely", "success")
+    }
+
+    for spec in INDICATOR_SPECS:
+        raw = matched_values[spec['key']]
+        label, badge_style = scale_labels.get(round(raw), ("Moderate", "primary"))
+        
+        # Invert badge color for stress indicators (High stress is red, low stress is green)
+        if spec['is_stress']:
+            if raw >= 4.0:
+                badge_style = "danger"
+                badge_bg = "rgba(239, 68, 68, 0.12)"
+                badge_color = "#ef4444"
+            elif raw >= 3.0:
+                badge_style = "warning"
+                badge_bg = "rgba(245, 158, 11, 0.12)"
+                badge_color = "#f59e0b"
+            else:
+                badge_style = "success"
+                badge_bg = "rgba(16, 185, 129, 0.12)"
+                badge_color = "#10b981"
+        else:
+            if raw >= 4.0:
+                badge_bg = "rgba(16, 185, 129, 0.12)"
+                badge_color = "#10b981"
+            elif raw >= 3.0:
+                badge_bg = "rgba(79, 70, 229, 0.12)"
+                badge_color = "#4f46e5"
+            else:
+                badge_bg = "rgba(239, 68, 68, 0.12)"
+                badge_color = "#ef4444"
+
+        card = f'''
+        <div class="indicator-item">
+          <div class="indicator-top">
+            <span class="indicator-name">{spec['title']}</span>
+            <span class="indicator-badge" style="background:{badge_bg}; color:{badge_color};">{label}</span>
+          </div>
+          <div class="indicator-desc">{spec['desc']}</div>
+        </div>'''
+        indicators_html.append(card)
+
+    # 3-Phase Action Plan based on lowest scoring / highest stress areas
     priority_dims = []
-    if stress >= 60:
-        priority_dims.append('stress_anxiety')
-    if energy <= 50:
-        priority_dims.append('energy_vitality')
-    if coping <= 50:
-        priority_dims.append('coping_adaptability')
-    if emotional <= 55:
-        priority_dims.append('emotional_wellbeing')
+    if stress_pct >= 55:
+        priority_dims.append("stress_overwhelm")
+    if sc_pct <= 55:
+        priority_dims.append("self_care")
+    if sleep_pct <= 55:
+        priority_dims.append("sleep_vitality")
+    if wb_pct <= 60:
+        priority_dims.append("emotional_wellbeing")
+    if soc_pct <= 55:
+        priority_dims.append("social_connection")
     if not priority_dims:
-        priority_dims = ['stress_anxiety', 'energy_vitality', 'emotional_wellbeing']
+        priority_dims = ["self_care", "sleep_vitality", "emotional_wellbeing"]
 
-    phases = ['Phase 1: Immediate Relief (Day 1)', 'Phase 2: Short-Term Habit (Week 1)', 'Phase 3: Sustainable Growth (Month 1+)']
+    recs_pool = config.get("recommendations", {})
+    action_cards = []
+    phases = ["Phase 1: Immediate Relief (Day 1)", "Phase 2: Short-Term Habit (Week 1)", "Phase 3: Sustainable Growth (Month 1+)"]
+
     for i, phase_title in enumerate(phases):
         dim_key = priority_dims[i % len(priority_dims)]
         dim_recs = recs_pool.get(dim_key, [])
         rec_item = dim_recs[i % len(dim_recs)] if dim_recs else {
-            'action': 'Mindful Rest & Recharging',
-            'detail': 'Allocate 15 minutes of uninterrupted quiet reflection and gentle physical stretching.'
+            "action": "Mindful Rest & Recharging",
+            "detail": "Allocate 20 minutes of uninterrupted quiet reflection and gentle physical movement."
         }
-        card_html = f'<div class="plan-card"><div class="plan-phase">{phase_title}</div><h3 class="plan-heading">{rec_item.get("action", "Wellness Micro-Habit")}</h3><p class="plan-body">{rec_item.get("detail", "")}</p></div>'
+        card_html = f'''
+        <div class="plan-card">
+          <div class="plan-phase">{phase_title}</div>
+          <h3 class="plan-heading">{rec_item.get('action', 'Wellness Micro-Habit')}</h3>
+          <p class="plan-body">{rec_item.get('detail', '')}</p>
+        </div>'''
         action_cards.append(card_html)
 
     return {
-        'participant_name': p_name or 'Participant',
-        'age': age,
-        'gender': gender,
-        'scores': final_scores,
-        'persona': assigned_persona,
-        'stress_label': stress_label,
-        'badge_type': badge_type,
-        'badge_text': badge_text,
-        'stress_color': stress_color,
-        'stress_advice': stress_advice,
-        'open_stressors': '; '.join(open_stressors) if open_stressors else 'Academic workload, exams, routine pressures.',
-        'open_anchors': '; '.join(open_anchors) if open_anchors else 'Music, physical exercise, quiet personal time.',
-        'action_cards_html': '\n'.join(action_cards)
+        "participant_name": p_name or "Participant",
+        "age": age,
+        "gender": gender,
+        "scores": final_scores,
+        "persona": assigned_persona,
+        "stress_label": stress_label,
+        "badge_type": badge_type,
+        "badge_text": badge_text,
+        "stress_color": stress_color,
+        "stress_advice": stress_advice,
+        "indicators_html": "\n".join(indicators_html),
+        "action_cards_html": "\n".join(action_cards)
     }
 
 def render_report(submission, scored, template_str):
@@ -201,13 +369,13 @@ def render_report(submission, scored, template_str):
     ts = submission.get('timestamp', datetime.now(timezone.utc).strftime('%Y-%m-%d'))
     date_str = ts.split('T')[0] if 'T' in ts else ts
     cohort = submission.get('cohort', 'CEP Cohort 2026')
-    radar_stress_inv = max(5, 100 - scores['stress_anxiety'])
+    radar_stress_inv = max(5, 100 - scores['stress_overwhelm'])
 
     def get_color(val):
-        if val >= 70: return '#10b981'
-        if val >= 50: return '#3b82f6'
-        if val >= 35: return '#f59e0b'
-        return '#ef4444'
+        if val >= 70: return "#10b981"
+        if val >= 50: return "#3b82f6"
+        if val >= 35: return "#f59e0b"
+        return "#ef4444"
 
     rendered = template_str
     rendered = rendered.replace('{{participant_name}}', p_name)
@@ -222,22 +390,21 @@ def render_report(submission, scored, template_str):
     rendered = rendered.replace('{{status_badge_type}}', scored['badge_type'])
     rendered = rendered.replace('{{status_badge_text}}', scored['badge_text'])
 
-    rendered = rendered.replace('{{score_stress}}', str(scores['stress_anxiety']))
+    rendered = rendered.replace('{{score_stress}}', str(scores['stress_overwhelm']))
     rendered = rendered.replace('{{color_stress}}', scored['stress_color'])
     rendered = rendered.replace('{{score_emotional}}', str(scores['emotional_wellbeing']))
     rendered = rendered.replace('{{color_emotional}}', get_color(scores['emotional_wellbeing']))
-    rendered = rendered.replace('{{score_energy}}', str(scores['energy_vitality']))
-    rendered = rendered.replace('{{color_energy}}', get_color(scores['energy_vitality']))
-    rendered = rendered.replace('{{score_coping}}', str(scores['coping_adaptability']))
-    rendered = rendered.replace('{{color_coping}}', get_color(scores['coping_adaptability']))
+    rendered = rendered.replace('{{score_energy}}', str(scores['sleep_vitality']))
+    rendered = rendered.replace('{{color_energy}}', get_color(scores['sleep_vitality']))
+    rendered = rendered.replace('{{score_coping}}', str(scores['self_care']))
+    rendered = rendered.replace('{{color_coping}}', get_color(scores['self_care']))
+    rendered = rendered.replace('{{score_social}}', str(scores['social_connection']))
+    rendered = rendered.replace('{{color_social}}', get_color(scores['social_connection']))
 
     rendered = rendered.replace('{{radar_stress_inv}}', str(radar_stress_inv))
-    rendered = rendered.replace('{{score_social}}', str(scores['social_connectivity']))
     rendered = rendered.replace('{{stress_level_label}}', scored['stress_label'])
     rendered = rendered.replace('{{stress_advice_snippet}}', scored['stress_advice'])
-
-    rendered = rendered.replace('{{reported_stressors}}', scored['open_stressors'])
-    rendered = rendered.replace('{{reported_coping_anchors}}', scored['open_anchors'])
+    rendered = rendered.replace('{{indicators_breakdown_html}}', scored['indicators_html'])
     rendered = rendered.replace('{{action_plan_cards}}', scored['action_cards_html'])
 
     return rendered
@@ -245,9 +412,9 @@ def render_report(submission, scored, template_str):
 def render_index(all_evaluations, index_template_str):
     total = len(all_evaluations)
     if total > 0:
-        avg_stress = round(sum(e['scored']['scores']['stress_anxiety'] for e in all_evaluations) / total)
+        avg_stress = round(sum(e['scored']['scores']['stress_overwhelm'] for e in all_evaluations) / total)
         avg_resil = round(sum(e['scored']['scores']['emotional_wellbeing'] for e in all_evaluations) / total)
-        avg_coping = round(sum(e['scored']['scores']['coping_adaptability'] for e in all_evaluations) / total)
+        avg_coping = round(sum(e['scored']['scores']['self_care'] for e in all_evaluations) / total)
     else:
         avg_stress, avg_resil, avg_coping = 0, 0, 0
 
@@ -260,7 +427,6 @@ def render_index(all_evaluations, index_template_str):
         gender = scored['gender']
         sub_id = sub.get('submission_id') or slugify(p_name)
         scores = scored['scores']
-        badge_type = scored['badge_type']
         badge_text = scored['badge_text']
         persona_title = scored['persona']['title']
         persona_tagline = scored['persona']['tagline']
@@ -269,7 +435,7 @@ def render_index(all_evaluations, index_template_str):
         if age != 'N/A':
             demo_str += f', Age {age}' if demo_str else f'Age {age}'
 
-        card = f'''<a href="reports/{sub_id}.html" class="report-preview-card"><div><div class="report-card-top"><span class="user-badge">{p_name}</span><span class="status-badge" style="background: rgba(79, 70, 229, 0.1); color: var(--brand-primary);">{badge_text}</span></div><div class="report-card-title">{persona_title}</div><div class="report-card-tagline">{persona_tagline}</div>{f"<div style='font-size:0.75rem;color:var(--text-muted);margin-bottom:10px;'>{demo_str}</div>" if demo_str else ''}</div><div class="report-metrics-row"><div class="report-metric-item">Stress: <strong>{scores["stress_anxiety"]}%</strong></div><div class="report-metric-item">Resilience: <strong>{scores["emotional_wellbeing"]}%</strong></div><div class="report-metric-item">Vitality: <strong>{scores["energy_vitality"]}%</strong></div></div></a>'''
+        card = f'''<a href="reports/{sub_id}.html" class="report-preview-card"><div><div class="report-card-top"><span class="user-badge">{p_name}</span><span class="status-badge" style="background: rgba(79, 70, 229, 0.1); color: var(--brand-primary);">{badge_text}</span></div><div class="report-card-title">{persona_title}</div><div class="report-card-tagline">{persona_tagline}</div>{f"<div style='font-size:0.75rem;color:var(--text-muted);margin-bottom:10px;'>{demo_str}</div>" if demo_str else ''}</div><div class="report-metrics-row"><div class="report-metric-item">Stress: <strong>{scores["stress_overwhelm"]}%</strong></div><div class="report-metric-item">Happiness: <strong>{scores["emotional_wellbeing"]}%</strong></div><div class="report-metric-item">Sleep: <strong>{scores["sleep_vitality"]}%</strong></div></div></a>'''
         cards_html.append(card)
 
     rendered = index_template_str

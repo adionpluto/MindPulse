@@ -1,283 +1,256 @@
 {
   "dimensions": {
-    "stress_anxiety": {
-      "name": "Stress & Overwhelm",
-      "description": "Measures acute tension, cognitive overload, and perceived inability to manage current demands.",
-      "benchmark": 45,
+    "stress_overwhelm": {
+      "name": "Stress & Cognitive Load",
+      "description": "Measures acute mental pressure, physical tension, and repetitive overthinking.",
+      "benchmark": 40,
       "inverse": true
     },
     "emotional_wellbeing": {
-      "name": "Emotional Resilience",
-      "description": "Assesses emotional regulation, baseline mood stability, optimism, and inner fortitude.",
+      "name": "Emotional Balance & Happiness",
+      "description": "Evaluates baseline daily happiness, emotional regulation under setbacks, and future optimism.",
+      "benchmark": 70,
+      "inverse": false
+    },
+    "sleep_vitality": {
+      "name": "Sleep Restoration & Vitality",
+      "description": "Assesses restorative sleep quality, physical energy stamina, and daytime concentration.",
       "benchmark": 65,
       "inverse": false
     },
-    "energy_vitality": {
-      "name": "Vitality & Focus",
-      "description": "Measures physical energy, restorative sleep, concentration stamina, and daily motivation.",
+    "self_care": {
+      "name": "Personal Time & Self-Care",
+      "description": "Gauges dedication to personal unwind time, proactive healthy hobbies, and boundary management.",
       "benchmark": 60,
       "inverse": false
     },
-    "coping_adaptability": {
-      "name": "Coping Adaptability",
-      "description": "Evaluates the use of proactive, problem-solving, and constructive coping mechanisms vs avoidant habits.",
-      "benchmark": 55,
-      "inverse": false
-    },
-    "social_connectivity": {
-      "name": "Social Anchoring",
-      "description": "Gauges perceived social support, communication with peers/family, and feelings of belonging.",
-      "benchmark": 58,
+    "social_connection": {
+      "name": "Social Belonging & Support",
+      "description": "Reflects perceived connection, willingness to seek guidance, and feeling valued by peers.",
+      "benchmark": 65,
       "inverse": false
     }
   },
+  "questions": [
+    {
+      "id": "q1",
+      "text": "1. How likely are you to wake up feeling well-rested, energized, and refreshed for the day?",
+      "dimension": "sleep_vitality",
+      "is_stress_indicator": false
+    },
+    {
+      "id": "q2",
+      "text": "2. How likely are you to take dedicated personal time for yourself each day to unwind and relax?",
+      "dimension": "self_care",
+      "is_stress_indicator": false
+    },
+    {
+      "id": "q3",
+      "text": "3. How likely are you to feel genuinely happy, content, and positive in your day-to-day routine?",
+      "dimension": "emotional_wellbeing",
+      "is_stress_indicator": false
+    },
+    {
+      "id": "q4",
+      "text": "4. How likely are you to feel overwhelmed or weighed down by your daily academic or personal responsibilities?",
+      "dimension": "stress_overwhelm",
+      "is_stress_indicator": true
+    },
+    {
+      "id": "q5",
+      "text": "5. How likely are you to experience physical tension, nervousness, or racing thoughts under pressure?",
+      "dimension": "stress_overwhelm",
+      "is_stress_indicator": true
+    },
+    {
+      "id": "q6",
+      "text": "6. When unexpected challenges or setbacks occur, how likely are you to stay calm and emotionally balanced?",
+      "dimension": "emotional_wellbeing",
+      "is_stress_indicator": false
+    },
+    {
+      "id": "q7",
+      "text": "7. How likely are you to maintain mental clarity, concentration, and motivation throughout your daily tasks?",
+      "dimension": "sleep_vitality",
+      "is_stress_indicator": false
+    },
+    {
+      "id": "q8",
+      "text": "8. When facing difficult stress, how likely are you to actively use healthy coping habits (e.g. exercise, walks, hobbies, mindfulness)?",
+      "dimension": "self_care",
+      "is_stress_indicator": false
+    },
+    {
+      "id": "q9",
+      "text": "9. How likely are you to reach out to friends, family, or mentors when you need emotional comfort or guidance?",
+      "dimension": "social_connection",
+      "is_stress_indicator": false
+    },
+    {
+      "id": "q10",
+      "text": "10. How likely do you feel valued, respected, and socially connected within your peer community?",
+      "dimension": "social_connection",
+      "is_stress_indicator": false
+    },
+    {
+      "id": "q11",
+      "text": "11. How likely are you to get trapped in repetitive overthinking, self-doubt, or worry about future outcomes?",
+      "dimension": "stress_overwhelm",
+      "is_stress_indicator": true
+    },
+    {
+      "id": "q12",
+      "text": "12. How likely are you to feel hopeful, motivated, and optimistic about your future and personal growth?",
+      "dimension": "emotional_wellbeing",
+      "is_stress_indicator": false
+    }
+  ],
   "likert_map": {
+    "1": 1,
+    "2": 2,
+    "3": 3,
+    "4": 4,
+    "5": 5,
+    "highly unlikely": 1,
+    "unlikely": 2,
+    "moderately": 3,
+    "sometimes": 3,
+    "neutral": 3,
+    "likely": 4,
+    "highly likely": 5,
+    "almost always": 5,
+    "almost never": 1,
     "never": 1,
     "rarely": 2,
-    "sometimes": 3,
     "often": 4,
     "always": 5,
-    "almost never": 1,
-    "fairly often": 4,
-    "very often": 5,
-    "strongly disagree": 1,
-    "disagree": 2,
-    "neutral": 3,
-    "agree": 4,
-    "strongly agree": 5,
-    "not at all": 1,
-    "several days": 2,
-    "more than half the days": 4,
-    "nearly every day": 5,
     "poor": 1,
     "fair": 2,
     "good": 4,
-    "excellent": 5,
-    "low": 1,
-    "moderate": 3,
-    "high": 4,
-    "very high": 5
-  },
-  "question_keywords": {
-    "stress_anxiety": [
-      "stress",
-      "anxious",
-      "anxiety",
-      "overwhelm",
-      "nervous",
-      "pressure",
-      "panic",
-      "worry",
-      "racing thoughts",
-      "tense",
-      "burnout"
-    ],
-    "emotional_wellbeing": [
-      "happy",
-      "content",
-      "calm",
-      "optimistic",
-      "mood",
-      "hopeless",
-      "sad",
-      "irritable",
-      "depressed",
-      "peace of mind",
-      "emotional stability",
-      "satisfied"
-    ],
-    "energy_vitality": [
-      "sleep",
-      "tired",
-      "fatigue",
-      "energy",
-      "exhausted",
-      "focus",
-      "concentrate",
-      "motivation",
-      "rest",
-      "burnout"
-    ],
-    "coping_adaptability": [
-      "cope",
-      "problem",
-      "manage",
-      "handle",
-      "adapt",
-      "avoid",
-      "exercise",
-      "meditation",
-      "hobby",
-      "routine",
-      "strategy"
-    ],
-    "social_connectivity": [
-      "friend",
-      "family",
-      "lonely",
-      "isolated",
-      "support",
-      "talk",
-      "connected",
-      "relationship",
-      "peer",
-      "social"
-    ]
+    "excellent": 5
   },
   "personas": [
     {
       "id": "thriving_anchor",
-      "title": "The Resilient Anchor",
-      "tagline": "High Emotional Balance & Strong Proactive Coping",
-      "condition": "stress < 35 and emotional >= 65 and coping >= 60",
-      "summary": "You demonstrate exceptional emotional fortitude, steady vitality, and healthy coping mechanisms. You maintain healthy boundaries under pressure and serve as a stabilizing presence for those around you."
+      "title": "The Thriving Anchor",
+      "tagline": "High Emotional Balance, Quality Rest & Healthy Boundaries",
+      "condition": "stress < 40 and wellbeing >= 65 and self_care >= 60",
+      "summary": "You demonstrate high emotional stability, solid restorative sleep, and proactive self-care. You protect your personal boundaries well and navigate academic/life pressures with steady composure."
     },
     {
-      "id": "strained_achiever",
-      "title": "The High-Functioning Overachiever",
-      "tagline": "Elevated Drive with Hidden Fatigue & Emerging Overwhelm",
-      "condition": "stress >= 60 and energy < 50",
-      "summary": "You possess strong drive and capability, but your nervous system is carrying a significant accumulated load. High cognitive demands paired with insufficient restorative recovery are pushing you toward burnout."
+      "id": "driven_depleted",
+      "title": "The High-Drive Overextender",
+      "tagline": "Strong Dedication with Slumping Self-Care & Sleep Deficit",
+      "condition": "stress >= 55 and (sleep < 50 or self_care < 50)",
+      "summary": "You are giving 100% of your energy to responsibilities, but your own personal reserves are running dangerously low. Disrupted sleep and lack of dedicated 'me-time' are causing cognitive friction."
     },
     {
-      "id": "overwhelmed_seeker",
-      "title": "The Overwhelmed Navigator",
-      "tagline": "Elevated Stress & Acute Overload in Transition",
+      "id": "overwhelmed_ruminator",
+      "title": "The Overthinking Navigator",
+      "tagline": "Elevated Worry & Nervous System Overload",
       "condition": "stress >= 65",
-      "summary": "You are currently experiencing heightened psychological strain and cognitive overload. Everyday stressors feel magnified, making immediate nervous system regulation and restorative micro-habits essential."
+      "summary": "You are experiencing acute mental tension and repetitive loop worrying. Demands feel magnified right now, making nervous system de-escalation and structured task triage your top priorities."
     },
     {
-      "id": "fatigued_drifter",
-      "title": "The Depleted Explorer",
-      "tagline": "Low Energy Reserve & Sluggish Motivation",
-      "condition": "energy < 40 and emotional < 50",
-      "summary": "Your vitality reserves are currently running on empty. Disrupted sleep, routine fatigue, or sustained mental exertion have depleted your physical stamina and emotional spark."
+      "id": "quiet_withdrawer",
+      "title": "The Isolated Explorer",
+      "tagline": "Low Social Reach-Out with Independent Struggles",
+      "condition": "social < 45 and wellbeing < 55",
+      "summary": "You tend to carry emotional weight quietly on your own. Reconnecting with trusted peers or mentors will dramatically lighten your cognitive load and rebuild feelings of community belonging."
     },
     {
       "id": "balanced_harmonizer",
-      "title": "The Balanced Harmonizer",
-      "tagline": "Moderate Stability with Growth Potential",
+      "title": "The Steady Harmonizer",
+      "tagline": "Manageable Baselines with Opportunities for Enhancement",
       "condition": "default",
-      "summary": "You are navigating daily demands with a moderate degree of stability. While your emotional and stress baselines are manageable, introducing structured wellness rituals will amplify your focus and resilience."
+      "summary": "You are navigating daily life with moderate stability. While your emotional and stress baselines are manageable, incorporating intentional sleep rituals and self-care pauses will unlock greater focus and happiness."
     }
   ],
   "recommendations": {
-    "stress_anxiety": [
+    "stress_overwhelm": [
       {
         "phase": "Immediate Relief (Day 1)",
-        "action": "Physiological Sigh & 4-7-8 Breathwork",
-        "detail": "Perform 3 minutes of double-inhalation followed by extended exhalation to down-regulate acute sympathetic nervous arousal."
+        "action": "Physiological Sigh & 4-7-8 Breathing",
+        "detail": "Perform two sharp inhales through the nose followed by a slow 6-second exhale through the mouth for 3 minutes to instantly drop sympathetic cortisol arousal."
       },
       {
-        "phase": "Short-Term Reset (Week 1)",
-        "action": "Cognitive Brain Dump & Task Triage",
-        "detail": "Externalize mental chatter onto paper each evening. Categorize demands into actionable vs uncontrollable buckets to curb bedtime rumination."
+        "phase": "Short-Term Habit (Week 1)",
+        "action": "15-Minute Evening Worry Dump",
+        "detail": "Write all looming concerns on paper each evening. Group them into 'Within My Control' vs 'Beyond My Control' to halt nighttime thought loops."
       },
       {
-        "phase": "Sustainable Habit (Month 1+)",
-        "action": "Strict Digital Boundary & Cortisol Buffer",
-        "detail": "Enforce a screen-free window 45 minutes prior to sleep to prevent circadian disruption and nocturnal stress spikes."
+        "phase": "Sustainable Growth (Month 1+)",
+        "action": "Protected Cognitive Buffer Window",
+        "detail": "Establish a hard stop on study/work materials at least 45 minutes before sleep to prevent nervous system stimulation."
       }
     ],
-    "energy_vitality": [
+    "self_care": [
       {
         "phase": "Immediate Relief (Day 1)",
-        "action": "Morning Lux Light & Hydration Trigger",
-        "detail": "Expose eyes to natural outdoor light for 10-15 minutes within 30 minutes of waking and drink 500ml water to anchor circadian alertness."
+        "action": "Unapologetic 20-Minute Solitude Pause",
+        "detail": "Schedule 20 minutes solely for yourself today ? no notifications, no work, just listening to music, sketching, or enjoying a warm beverage."
       },
       {
-        "phase": "Short-Term Reset (Week 1)",
-        "action": "90-Minute Ultradian Rhythm Cycles",
-        "detail": "Work in 90-minute focused blocks followed by mandatory 10-minute active non-screen restoration (stretching, pacing, breathing)."
+        "phase": "Short-Term Habit (Week 1)",
+        "action": "Active Stress Decompression Ritual",
+        "detail": "Replace doom-scrolling breaks with physical movement ? a brisk 15-minute outdoor walk or gentle stretching between study blocks."
       },
       {
-        "phase": "Sustainable Habit (Month 1+)",
-        "action": "Sleep Sanctuary Architecture",
-        "detail": "Optimize sleep environment (temperature ~19\u00b0C/66\u00b0F, blackout curtains, white noise) to maximize restorative delta-wave sleep."
+        "phase": "Sustainable Growth (Month 1+)",
+        "action": "Non-Negotiable 'Me-Time' Block",
+        "detail": "Schedule personal hobbies on your calendar with the same priority as academic deadlines, treating self-care as essential fuel."
+      }
+    ],
+    "sleep_vitality": [
+      {
+        "phase": "Immediate Relief (Day 1)",
+        "action": "Morning Sunlight Alertness Trigger",
+        "detail": "Step outside for 10-15 minutes of natural morning sunlight within 30 minutes of waking to anchor your circadian rhythm and natural alertness."
+      },
+      {
+        "phase": "Short-Term Habit (Week 1)",
+        "action": "Consistent Sleep-Wake Anchor",
+        "detail": "Maintain a consistent wake-up time within a 45-minute window every day, even on weekends, to stabilize REM and deep restorative sleep."
+      },
+      {
+        "phase": "Sustainable Growth (Month 1+)",
+        "action": "Sleep Environment Sanctuary",
+        "detail": "Keep your sleeping room cool (19?C / 66?F), dark, and free from bright blue LEDs to stimulate natural melatonin production."
       }
     ],
     "emotional_wellbeing": [
       {
         "phase": "Immediate Relief (Day 1)",
-        "action": "Micro-Gratitude & Savoring Practice",
-        "detail": "Identify three distinct moments of comfort or accomplishment from today, mentally acknowledging why they mattered."
+        "action": "Micro-Gratitude Savoring",
+        "detail": "Identify three specific moments today that brought comfort or a smile, actively savoring the positive feeling for 20 seconds."
       },
       {
-        "phase": "Short-Term Reset (Week 1)",
-        "action": "Cognitive Reframing of Self-Criticism",
-        "detail": "Notice self-critical inner dialogues. Intentionally reframe them with empathetic, constructive coaching language."
+        "phase": "Short-Term Habit (Week 1)",
+        "action": "Inner Coach vs Inner Critic",
+        "detail": "Notice moments of harsh self-criticism and consciously reframe the dialogue into compassionate, constructive coaching."
       },
       {
-        "phase": "Sustainable Habit (Month 1+)",
-        "action": "Values-Aligned Weekly Milestone",
-        "detail": "Dedicate at least 2 hours each weekend to a hobby or creative outlet solely for intrinsic fulfillment, detached from performance."
+        "phase": "Sustainable Growth (Month 1+)",
+        "action": "Values-Aligned Weekly Goal",
+        "detail": "Spend at least 2 hours every weekend pursuing a creative or recreational activity purely for intrinsic joy rather than external praise."
       }
     ],
-    "coping_adaptability": [
+    "social_connection": [
       {
         "phase": "Immediate Relief (Day 1)",
-        "action": "5-4-3-2-1 Sensory Grounding",
-        "detail": "Engage your five senses to ground your mind in the present physical space whenever feeling mentally scattered."
+        "action": "Zero-Pressure Check-In Message",
+        "detail": "Send a simple message or voice note to one friend or family member sharing a warm thought or funny memory."
       },
       {
-        "phase": "Short-Term Reset (Week 1)",
-        "action": "Solution-Focused Action Mapping",
-        "detail": "When facing complex hurdles, break them into the smallest 15-minute micro-tasks to prevent paralysis and build momentum."
+        "phase": "Short-Term Habit (Week 1)",
+        "action": "Shared Presence Work / Study",
+        "detail": "Work or study alongside peers in communal spaces (library, campus lounge, caf?) to experience social presence without social fatigue."
       },
       {
-        "phase": "Sustainable Habit (Month 1+)",
-        "action": "Proactive Recovery Routine",
-        "detail": "Schedule active relaxation (nature walks, light yoga, journaling) on your calendar just as you would an academic or work deadline."
-      }
-    ],
-    "social_connectivity": [
-      {
-        "phase": "Immediate Relief (Day 1)",
-        "action": "Low-Friction Connection Signal",
-        "detail": "Send a quick supportive text or audio message to a friend or mentor with zero expectation of a prolonged conversation."
-      },
-      {
-        "phase": "Short-Term Reset (Week 1)",
-        "action": "Shared Space Immersion",
-        "detail": "Work or study in communal environments (libraries, student lounges, cafes) to experience social presence without social strain."
-      },
-      {
-        "phase": "Sustainable Habit (Month 1+)",
-        "action": "Weekly Authenticity Circle",
-        "detail": "Maintain a recurring check-in with a trusted confidant where you can honestly share ongoing feelings and mutual support."
+        "phase": "Sustainable Growth (Month 1+)",
+        "action": "Confidant & Mentor Anchor",
+        "detail": "Nurture regular conversations with a trusted mentor or peer where you can speak honestly about ongoing feelings and mutual goals."
       }
     ]
-  },
-  "crisis_helplines": [
-    {
-      "region": "United States / Canada",
-      "service": "988 Suicide & Crisis Lifeline",
-      "contact": "Call or Text 988 (24/7, Free & Confidential)"
-    },
-    {
-      "region": "Global Crisis Text",
-      "service": "Crisis Text Line",
-      "contact": "Text HOME to 741741"
-    },
-    {
-      "region": "India",
-      "service": "KIRAN Mental Health Line",
-      "contact": "1800-599-0019 (24/7 Toll-Free)"
-    },
-    {
-      "region": "India",
-      "service": "Tele-MANAS Government Helpline",
-      "contact": "14416 / 1800-891-4416"
-    },
-    {
-      "region": "United Kingdom",
-      "service": "Samaritans",
-      "contact": "Call 116 123 (Free, 24/7)"
-    },
-    {
-      "region": "International Directory",
-      "service": "Befrienders Worldwide & Find A Helpline",
-      "contact": "https://findahelpline.com"
-    }
-  ]
+  }
 }
