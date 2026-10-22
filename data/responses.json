@@ -169,5 +169,26 @@
     "participant_name": "Participant",
     "submission_id": "user-b3c470",
     "timestamp": "2026-09-03T18:06:02.875Z"
+  },
+  {
+    "age": "19",
+    "answers": {
+      "1. How often do you feel overwhelmed by your daily responsibilities or academic deadlines?": "2 - Rarely",
+      "2. How frequently do you experience physical tension, nervousness, or racing thoughts?": "4 - Fairly Often",
+      "3. How would you rate your overall mood stability and positivity over the past two weeks?": "2 - Fair",
+      "4. How often do you wake up feeling well-rested and energized for the day?": "4 - Often",
+      "5. When facing intense stress, how effectively do you use proactive coping strategies?": "3 - Sometimes",
+      "6. How connected and supported do you feel by your friends, family, or community?": "5 - Strongly Agree",
+      "7. What are your primary sources of stress or concern currently?": "College assignments and research opportunities.",
+      "8. What activities or habits currently bring you the most peace of mind?": "Music, biking and reading ",
+      "Age": "19",
+      "Full Name": "Yugandhar Shah",
+      "Gender": "Male"
+    },
+    "cohort": "CEP Cohort 2026",
+    "gender": "Male",
+    "participant_name": "Yugandhar Shah",
+    "submission_id": "yugandhar-shah",
+    "timestamp": "2026-10-22T09:34:10.485Z"
   }
 ]
