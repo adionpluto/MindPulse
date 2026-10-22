@@ -8,7 +8,7 @@ import urllib.request
 import csv
 import io
 
-GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeHTq7AJaWnuY1S7jnSzAU9U6klFItG0h-KqO-3gWt44p7g/viewform"
+GOOGLE_FORM_URL = "https://forms.gle/3iCUZn3tiiBUgQd87"
 
 def load_json(filepath):
     if os.path.exists(filepath):

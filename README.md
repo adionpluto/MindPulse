@@ -10,7 +10,7 @@
 ---
 
 ## Project Links
-- **Google Form (Assessment Survey)**: [Take the Psychological Evaluation](https://docs.google.com/forms/d/e/1FAIpQLSeHTq7AJaWnuY1S7jnSrSzAU9U6klFItG0h-KqO-3gWt44p7g/viewform)
+- **Google Form (Assessment Survey)**: [Take the Psychological Evaluation](https://forms.gle/3iCUZn3tiiBUgQd87)
 - **Edit Form Link**: [Form Editor](https://docs.google.com/forms/d/1nnzr6fL0V3Wv13q-yuWzAnY29lC-CdW4HG6VnvHo35k/edit)
 - **Live Platform**: [https://adionpluto.github.io/MindPulse/](https://adionpluto.github.io/MindPulse/)
 
